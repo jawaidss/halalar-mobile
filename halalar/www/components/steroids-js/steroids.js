@@ -1,4 +1,4 @@
-/*! steroids-js - v3.5.1 - 2014-08-21 14:05 */
+/*! steroids-js - v3.5.2 - 2014-08-26 17:26 */
 (function(window){
 var Bridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -2265,7 +2265,8 @@ TabBar = (function(_super) {
 })(EventsSupport);
 ;var WebView,
   __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 WebView = (function(_super) {
   __extends(WebView, _super);
@@ -2284,6 +2285,9 @@ WebView = (function(_super) {
     }
     WebView.__super__.constructor.call(this, "webview", ["created", "preloaded", "unloaded"]);
     this.location = options.constructor.name === "String" ? options : options.location;
+    if (options._parameters != null) {
+      this.setParams(options._parameters);
+    }
     this.id = options.id != null ? options.id : void 0;
     if (this.location.indexOf("://") === -1) {
       if (window.location.href.indexOf("file://") === -1) {
@@ -2354,6 +2358,20 @@ WebView = (function(_super) {
       params[pair[0]] = pair[1];
     }
     return params;
+  };
+
+  WebView.prototype.setParams = function(object) {
+    var key, value, _results;
+    _results = [];
+    for (key in object) {
+      value = object[key];
+      _results.push(this.setParam(key, value));
+    }
+    return _results;
+  };
+
+  WebView.prototype.setParam = function(key, value) {
+    return this.location = this.location + (__indexOf.call(this.location, "?") >= 0 ? "&" : "?") + ("" + (encodeURIComponent(key)) + "=" + (encodeURIComponent(value)));
   };
 
   WebView.prototype.removeLoading = function(options, callbacks) {
@@ -3487,7 +3505,7 @@ PostMessage = (function() {
 ;var _this = this;
 
 window.steroids = {
-  version: "3.5.1",
+  version: "3.5.2",
   Animation: Animation,
   File: File,
   views: {

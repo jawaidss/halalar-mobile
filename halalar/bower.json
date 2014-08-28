@@ -1,8 +1,7 @@
 {
   "name": "halalar",
   "version": "0.0.1",
-  "authors": [
-  ],
+  "authors": [],
   "ignore": [
     "**/.*",
     "node_modules",
@@ -12,6 +11,7 @@
     "tests"
   ],
   "dependencies": {
-    "steroids-js": "3.5.x"
+    "steroids-js": "3.5.x",
+    "angular": "~1.2.23"
   }
 }
