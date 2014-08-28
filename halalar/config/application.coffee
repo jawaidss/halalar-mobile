@@ -62,7 +62,7 @@ steroids.config.location = "http://localhost/index.html"
 #   location: "http://localhost/initialView.html"
 
 # ## Navigation Bar
-steroids.config.navigationBar.tintColor = "#00aeef"
+steroids.config.navigationBar.tintColor = "#ff9316"
 steroids.config.navigationBar.titleColor = "#ffffff"
 steroids.config.navigationBar.buttonTintColor = "#ffffff"
 
