@@ -1,0 +1,86 @@
+<div class="list">
+  <label class="item item-input">
+    <span class="input-label">Age</span>
+    <input type="number">
+  </label>
+  <div class="item item-divider">
+    Gender
+  </div>
+  <label class="item item-radio">
+    <input type="radio" name="gender">
+    <div class="item-content">
+      Male
+    </div>
+    <i class="radio-icon ion-checkmark"></i>
+  </label>
+  <label class="item item-radio">
+    <input type="radio" name="gender">
+    <div class="item-content">
+      Female
+    </div>
+    <i class="radio-icon ion-checkmark"></i>
+  </label>
+  <div class="item item-divider">
+    Location
+  </div>
+  <label class="item item-input">
+    <span class="input-label">City</span>
+    <input type="text">
+  </label>
+  <label class="item item-input item-select">
+    <div class="input-label">
+      Country
+    </div>
+    <select>
+      <option>United States of America</option>
+      <option>Canada</option>
+    </select>
+  </label>
+</div>
+
+<div class="list">
+  <a class="item item-icon-left" ng-class="{'item-stable': religion}" ng-click="modal('religion')">
+    <i class="icon ion-star"></i>
+    <h2>Religion</h2>
+    <p ng-show="religion">{{ religion }}</p>
+  </a>
+  <a class="item item-icon-left" ng-class="{'item-stable': family}" ng-click="modal('family')">
+    <i class="icon ion-person-stalker"></i>
+    <h2>Family</h2>
+    <p ng-show="religion">{{ family }}</p>
+  </a>
+  <a class="item item-icon-left" ng-class="{'item-stable': self}" ng-click="modal('self')">
+    <i class="icon ion-person"></i>
+    <h2>Self</h2>
+    <p ng-show="self">{{ self }}</p>
+  </a>
+  <a class="item item-icon-left" ng-class="{'item-stable': community}" ng-click="modal('community')">
+    <i class="icon ion-home"></i>
+    <h2>Community</h2>
+    <p ng-show="community">{{ community }}</p>
+  </a>
+  <a class="item item-icon-left" ng-class="{'item-stable': career}" ng-click="modal('career')">
+    <i class="icon ion-briefcase"></i>
+    <h2>Career</h2>
+    <p ng-show="career">{{ career }}</p>
+  </a>
+</div>
+
+<div class="list">
+  <label class="item item-input">
+    <span class="input-label">Username</span>
+    <input type="text">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Email address</span>
+    <input type="email">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Password</span>
+    <input type="password">
+  </label>
+</div>
+
+<button class="button button-block button-positive" ng-click="submit()">
+  Submit
+</button>

@@ -1,11 +1,12 @@
-// Display the native navigation bar with the title "Hello World!"
-steroids.view.navigationBar.show("Halalar");
+var halalarApp = angular.module('halalarApp', [
+  'ngRoute',
+  'LocalStorageModule',
+  'halalarControllers'
+]);
 
-// Set the WebView background color to white (effective on iOS only)
-steroids.view.setBackgroundColor("#FFFFFF");
-
-var halalarApp = angular.module('halalarApp', []);
-
-halalarApp.controller('IndexCtrl', ['$scope', function($scope) {
-  $scope.greeting = 'Hello, world!';
+halalarApp.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/main', {templateUrl: 'partials/main.html', controller: 'MainCtrl'});
+  $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'});
+  $routeProvider.when('/signup', {templateUrl: 'partials/signup.html', controller: 'SignupCtrl'});
+  $routeProvider.otherwise({redirectTo: '/main'});
 }]);

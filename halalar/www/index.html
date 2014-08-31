@@ -16,11 +16,12 @@
   <script src="/components/steroids-js/steroids.js"></script>
 
   <script src="/components/angular/angular.min.js"></script>
+  <script src="/components/angular-route/angular-route.min.js"></script>
+  <script src="/components/angular-local-storage/angular-local-storage.min.js"></script>
+  <script src="/javascripts/controllers.js"></script>
   <script src="/javascripts/application.js"></script>
 </head>
-<body class="content" ng-controller="IndexCtrl">
-  <div class="padding">
-    <h1>{{ greeting }}</h1>
-  </div>
+<body class="content">
+  <div class="padding" ng-view></div>
 </body>
 </html>
