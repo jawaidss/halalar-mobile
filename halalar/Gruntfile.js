@@ -40,7 +40,9 @@ module.exports = function(grunt) {
           beforeEach: false,
           inject: false,
           it: false,
-          expect: false
+          expect: false,
+          spyOn: false,
+          jasmine: false
         }
       }
     }
