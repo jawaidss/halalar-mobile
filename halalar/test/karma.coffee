@@ -14,8 +14,11 @@ module.exports = (config) ->
     files: [
       'www/components/steroids-js/steroids.js'
       'www/components/angular/angular.min.js'
+      'www/components/angular-mocks/angular-mocks.js'
+      'www/components/angular-route/angular-route.min.js'
+      'www/components/angular-local-storage/angular-local-storage.min.js'
       'www/javascripts/**/*.js'
-      'test/unit/**/*Spec.coffee'
+      'test/unit/**/*.js'
     ]
 
 
@@ -70,7 +73,7 @@ module.exports = (config) ->
     # if true, Karma captures browsers, runs the tests and exits
     singleRun: true
 
-    coverageReporter: { // TODO
+    coverageReporter: { # TODO
       type : 'html'
       dir : 'coverage/'
     }

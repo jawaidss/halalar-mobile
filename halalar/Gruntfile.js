@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     jshint: {
-      files: ['Gruntfile.js', 'www/javascripts/**/*.js', 'test/**/*.js'],
+      files: ['Gruntfile.js', 'www/javascripts/**/*.js', 'test/unit/**/*.js'],
       options: { // TODO
         node: true,
         browser: true,
@@ -35,7 +35,12 @@ module.exports = function(grunt) {
         globals: {
           alert: false,
           angular: false,
-          steroids: false
+          steroids: false,
+          describe: false,
+          beforeEach: false,
+          inject: false,
+          it: false,
+          expect: false
         }
       }
     }

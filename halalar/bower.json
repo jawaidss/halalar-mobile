@@ -14,6 +14,7 @@
     "steroids-js": "3.5.x",
     "angular": "~1.2.23",
     "angular-route": "~1.2.23",
-    "angular-local-storage": "~0.0.7"
+    "angular-local-storage": "~0.0.7",
+    "angular-mocks": "~1.2.23"
   }
 }
