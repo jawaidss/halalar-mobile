@@ -1,3 +1,5 @@
+'use strict';
+
 // When using iOS simulator, the first console.log messages might not appear before Cordova has overridden the console.log
 // Here we buffer the messages and output when override is done.
 
@@ -9,11 +11,11 @@
 
   window.console.log = function(args) {
     logMessages.push(args);
-  }
+  };
 
   var bufferConsoleLogUntilReadyAndFlush = function() {
-    var cordovaOverride = "logWithArgs";
-    var isNative = "[native code]";
+    var cordovaOverride = 'logWithArgs';
+    var isNative = '[native code]';
 
     if ( (defaultConsoleLog.toString().indexOf(cordovaOverride) > -1) ||
          (defaultConsoleLog.toString().indexOf(isNative) > -1) ) {
@@ -30,7 +32,7 @@
 
     }
 
-  }
+  };
 
   bufferConsoleLogUntilReadyAndFlush();
 

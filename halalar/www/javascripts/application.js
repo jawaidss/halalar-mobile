@@ -1,3 +1,5 @@
+'use strict';
+
 var halalarApp = angular.module('halalarApp', [
   'ngRoute',
   'LocalStorageModule',

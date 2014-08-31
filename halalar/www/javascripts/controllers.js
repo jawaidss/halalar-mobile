@@ -1,3 +1,5 @@
+'use strict';
+
 var halalarControllers = angular.module('halalarControllers', []);
 
 halalarControllers.controller('MainCtrl', ['$scope', '$location', 'localStorageService', function($scope, $location, localStorageService) {
@@ -15,7 +17,7 @@ halalarControllers.controller('MainCtrl', ['$scope', '$location', 'localStorageS
 
   $scope.logout = function() {
     navigator.notification.confirm('Log out?', function(buttonIndex) {
-      if (buttonIndex == 1) {
+      if (buttonIndex === 1) {
         localStorageService.clearAll();
         $scope.$apply(function () {
           $scope.user = null;
@@ -28,7 +30,7 @@ halalarControllers.controller('MainCtrl', ['$scope', '$location', 'localStorageS
 halalarControllers.controller('LoginCtrl', ['$scope', '$location', 'localStorageService', function($scope, $location, localStorageService) {
   steroids.view.navigationBar.show('Log in');
 
-  backButton = new steroids.buttons.NavigationBarButton()
+  var backButton = new steroids.buttons.NavigationBarButton();
   backButton.title = 'Back';
   backButton.onTap = function() {
     steroids.view.navigationBar.setButtons({
@@ -55,7 +57,7 @@ halalarControllers.controller('LoginCtrl', ['$scope', '$location', 'localStorage
 halalarControllers.controller('SignupCtrl', ['$scope', '$location', 'localStorageService', function($scope, $location, localStorageService) {
   steroids.view.navigationBar.show('Sign up');
 
-  backButton = new steroids.buttons.NavigationBarButton()
+  var backButton = new steroids.buttons.NavigationBarButton();
   backButton.title = 'Back';
   backButton.onTap = function() {
     steroids.view.navigationBar.setButtons({

@@ -3,14 +3,17 @@
   "version": "0.0.1",
   "description": "My awesome AppGyver Steroids project.",
   "repository": "N/A",
-  "readme":"N/A",
+  "readme": "N/A",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "devDependencies": {
-    "grunt-steroids": "0.x"
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-steroids": "0.x",
+    "karma": "^0.12.23",
+    "karma-coverage": "^0.2.6"
   },
   "license": "none",
   "engines": {
