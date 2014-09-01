@@ -1,11 +1,11 @@
 'use strict';
 
-var halalarControllers = angular.module('halalarControllers', []);
+var halalarControllers = angular.module('halalarControllers', ['halalarServices']);
 
-halalarControllers.controller('MainCtrl', ['$scope', '$location', 'localStorageService', function($scope, $location, localStorageService) {
+halalarControllers.controller('MainCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
   steroids.view.navigationBar.show('Halalar');
 
-  $scope.user = localStorageService.get('user');
+  $scope.user = userService.getUser();
 
   $scope.login = function() {
     $location.path('/login');
@@ -18,7 +18,7 @@ halalarControllers.controller('MainCtrl', ['$scope', '$location', 'localStorageS
   $scope.logout = function() {
     navigator.notification.confirm('Log out?', function(buttonIndex) {
       if (buttonIndex === 1) {
-        localStorageService.clearAll();
+        userService.logout();
         $scope.$apply(function () {
           $scope.user = null;
         });
@@ -27,7 +27,7 @@ halalarControllers.controller('MainCtrl', ['$scope', '$location', 'localStorageS
   };
 }]);
 
-halalarControllers.controller('LoginCtrl', ['$scope', '$location', 'localStorageService', function($scope, $location, localStorageService) {
+halalarControllers.controller('LoginCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
   steroids.view.navigationBar.show('Log in');
 
   var backButton = new steroids.buttons.NavigationBarButton();
@@ -47,14 +47,21 @@ halalarControllers.controller('LoginCtrl', ['$scope', '$location', 'localStorage
   });
 
   $scope.submit = function() {
-    navigator.notification.alert('Logged in!', function() {
-      localStorageService.set('user', 'test');
-      backButton.onTap();
-    });
+    userService.login(
+      $scope.username, $scope.password,
+      function() {
+        navigator.notification.alert('Logged in!', function() {
+          backButton.onTap();
+        });
+      },
+      function() {
+        navigator.notification.alert('Error!', function() {});
+      }
+    );
   };
 }]);
 
-halalarControllers.controller('SignupCtrl', ['$scope', '$location', 'localStorageService', function($scope, $location, localStorageService) {
+halalarControllers.controller('SignupCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
   steroids.view.navigationBar.show('Sign up');
 
   var backButton = new steroids.buttons.NavigationBarButton();
@@ -78,9 +85,18 @@ halalarControllers.controller('SignupCtrl', ['$scope', '$location', 'localStorag
   };
 
   $scope.submit = function() {
-    navigator.notification.alert('Signed up!', function() {
-      localStorageService.set('user', 'test');
-      backButton.onTap();
-    });
+    userService.signup(
+      $scope.age, $scope.gender, $scope.city, $scope.country,
+      $scope.religion, $scope.family, $scope.self, $scope.community, $scope.career,
+      $scope.username, $scope.email, $scope.password,
+      function() {
+        navigator.notification.alert('Signed up!', function() {
+          backButton.onTap();
+        });
+      },
+      function() {
+        navigator.notification.alert('Error!', function() {});
+      }
+    );
   };
 }]);
