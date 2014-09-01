@@ -1,20 +1,20 @@
 <div class="list">
   <label class="item item-input">
     <span class="input-label">Age</span>
-    <input type="number">
+    <input type="number" ng-model="age">
   </label>
   <div class="item item-divider">
     Gender
   </div>
   <label class="item item-radio">
-    <input type="radio" name="gender">
+    <input type="radio" name="gender" value="male" ng-model="gender">
     <div class="item-content">
       Male
     </div>
     <i class="radio-icon ion-checkmark"></i>
   </label>
   <label class="item item-radio">
-    <input type="radio" name="gender">
+    <input type="radio" name="gender" value="female" ng-model="gender">
     <div class="item-content">
       Female
     </div>
@@ -25,15 +25,15 @@
   </div>
   <label class="item item-input">
     <span class="input-label">City</span>
-    <input type="text">
+    <input type="text" ng-model="city">
   </label>
   <label class="item item-input item-select">
     <div class="input-label">
       Country
     </div>
-    <select>
-      <option>United States of America</option>
-      <option>Canada</option>
+    <select ng-model="country"><!-- TODO -->
+      <option value="United States of America">United States of America</option>
+      <option value="Canada">Canada</option>
     </select>
   </label>
 </div>
@@ -69,15 +69,15 @@
 <div class="list">
   <label class="item item-input">
     <span class="input-label">Username</span>
-    <input type="text">
+    <input type="text" ng-model="username">
   </label>
   <label class="item item-input">
     <span class="input-label">Email address</span>
-    <input type="email">
+    <input type="email" ng-model="email">
   </label>
   <label class="item item-input">
     <span class="input-label">Password</span>
-    <input type="password">
+    <input type="password" ng-model="password">
   </label>
 </div>
 
