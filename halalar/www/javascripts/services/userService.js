@@ -1,8 +1,6 @@
 'use strict';
 
-var halalarServices = angular.module('halalarServices', ['LocalStorageModule']);
-
-halalarServices.service('userService', ['localStorageService', function userService(localStorageService) {
+angular.module('halalarServices').service('userService', ['localStorageService', function userService(localStorageService) {
   this.getUser = function() {
     return localStorageService.get('user');
   };

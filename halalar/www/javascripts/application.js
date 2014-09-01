@@ -1,11 +1,12 @@
 'use strict';
 
-var halalarApp = angular.module('halalarApp', [
+angular.module('halalarServices', ['LocalStorageModule']);
+angular.module('halalarControllers', ['halalarServices']);
+
+angular.module('halalarApp', [
   'ngRoute',
   'halalarControllers'
-]);
-
-halalarApp.config(['$routeProvider', function($routeProvider) {
+]).config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/main', {templateUrl: 'partials/main.html', controller: 'MainCtrl'});
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'});
   $routeProvider.when('/signup', {templateUrl: 'partials/signup.html', controller: 'SignupCtrl'});
