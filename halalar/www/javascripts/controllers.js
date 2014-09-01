@@ -7,18 +7,18 @@ halalarControllers.controller('MainCtrl', ['$scope', '$location', 'userService',
 
   $scope.user = userService.getUser();
 
-  $scope.login = function() {
+  $scope.logIn = function() {
     $location.path('/login');
   };
 
-  $scope.signup = function() {
+  $scope.signUp = function() {
     $location.path('/signup');
   };
 
-  $scope.logout = function() {
+  $scope.logOut = function() {
     navigator.notification.confirm('Log out?', function(buttonIndex) {
       if (buttonIndex === 1) {
-        userService.logout();
+        userService.logOut();
         $scope.$apply(function () {
           $scope.user = null;
         });
@@ -47,7 +47,7 @@ halalarControllers.controller('LoginCtrl', ['$scope', '$location', 'userService'
   });
 
   $scope.submit = function() {
-    userService.login(
+    userService.logIn(
       $scope.username, $scope.password,
       function() {
         navigator.notification.alert('Logged in!', function() {
@@ -85,7 +85,7 @@ halalarControllers.controller('SignupCtrl', ['$scope', '$location', 'userService
   };
 
   $scope.submit = function() {
-    userService.signup(
+    userService.signUp(
       $scope.age, $scope.gender, $scope.city, $scope.country,
       $scope.religion, $scope.family, $scope.self, $scope.community, $scope.career,
       $scope.username, $scope.email, $scope.password,

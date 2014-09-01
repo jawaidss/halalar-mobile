@@ -7,7 +7,7 @@ halalarServices.service('userService', ['localStorageService', function userServ
     return localStorageService.get('user');
   };
 
-  this.login = function(username, password, successCallback, errorCallback) {
+  this.logIn = function(username, password, successCallback, errorCallback) {
     if (username) { // TODO
       localStorageService.set('user', 'temp123');
       successCallback();
@@ -16,7 +16,7 @@ halalarServices.service('userService', ['localStorageService', function userServ
     }
   };
 
-  this.signup = function(age, gender, city, country,
+  this.signUp = function(age, gender, city, country,
                          religion, family, self, community, career,
                          username, email, password,
                          successCallback, errorCallback) {
@@ -28,7 +28,7 @@ halalarServices.service('userService', ['localStorageService', function userServ
     }
   };
 
-  this.logout = function() {
+  this.logOut = function() {
     localStorageService.remove('user');
   };
 }]);

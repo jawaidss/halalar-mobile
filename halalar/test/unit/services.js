@@ -28,13 +28,13 @@ describe('Service: userService', function() {
     var password = 'password';
     var successCallback = jasmine.createSpy('successCallback');
     var errorCallback = jasmine.createSpy('errorCallback');
-    userService.login(username, password, successCallback, errorCallback);
+    userService.logIn(username, password, successCallback, errorCallback);
     expect(localStorageService.set).toHaveBeenCalledWith('user', 'temp123');
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 
     username = null;
-    userService.login(username, password, successCallback, errorCallback);
+    userService.logIn(username, password, successCallback, errorCallback);
     expect(localStorageService.set.calls.length).toEqual(1);
     expect(successCallback.calls.length).toEqual(1);
     expect(errorCallback).toHaveBeenCalled();
@@ -55,7 +55,7 @@ describe('Service: userService', function() {
     var password = 'password';
     var successCallback = jasmine.createSpy('successCallback');
     var errorCallback = jasmine.createSpy('errorCallback');
-    userService.signup(
+    userService.signUp(
       age, gender, city, country,
       religion, family, self, community, career,
       username, email, password,
@@ -66,7 +66,7 @@ describe('Service: userService', function() {
     expect(errorCallback).not.toHaveBeenCalled();
 
     username = null;
-    userService.signup(
+    userService.signUp(
       age, gender, city, country,
       religion, family, self, community, career,
       username, email, password,
@@ -78,7 +78,7 @@ describe('Service: userService', function() {
   });
 
   it('should log out', function() {
-    userService.logout();
+    userService.logOut();
     expect(localStorageService.remove).toHaveBeenCalledWith('user');
   });
 });

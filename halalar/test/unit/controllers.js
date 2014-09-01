@@ -18,7 +18,7 @@ describe('Controller: MainCtrl', function() {
 
     spyOn(location, 'path').andCallThrough();
     spyOn(userService, 'getUser').andCallThrough();
-    spyOn(userService, 'logout').andCallThrough();
+    spyOn(userService, 'logOut').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
 
     MainCtrl = $controller('MainCtrl', {
@@ -38,12 +38,12 @@ describe('Controller: MainCtrl', function() {
   });
 
   it('should change the path to the login page', function() {
-    scope.login();
+    scope.logIn();
     expect(location.path).toHaveBeenCalledWith('/login');
   });
 
   it('should change the path to the signup page', function() {
-    scope.signup();
+    scope.signUp();
     expect(location.path).toHaveBeenCalledWith('/signup');
   });
 
@@ -56,9 +56,9 @@ describe('Controller: MainCtrl', function() {
       })
     };
 
-    scope.logout();
+    scope.logOut();
     expect(navigator.notification.confirm).toHaveBeenCalledWith('Log out?', jasmine.any(Function));
-    expect(userService.logout).not.toHaveBeenCalled();
+    expect(userService.logOut).not.toHaveBeenCalled();
     expect(scope.user).not.toBeNull();
 
     navigator.notification = {
@@ -67,9 +67,9 @@ describe('Controller: MainCtrl', function() {
       })
     };
 
-    scope.logout();
+    scope.logOut();
     expect(navigator.notification.confirm).toHaveBeenCalledWith('Log out?', jasmine.any(Function));
-    expect(userService.logout).toHaveBeenCalled();
+    expect(userService.logOut).toHaveBeenCalled();
     expect(scope.user).toBeNull();
   });
 });
@@ -91,7 +91,7 @@ describe('Controller: LoginCtrl', function() {
     userService = _userService_;
 
     spyOn(location, 'path').andCallThrough();
-    spyOn(userService, 'login').andCallThrough();
+    spyOn(userService, 'logIn').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'setButtons').andCallThrough();
 
@@ -127,7 +127,7 @@ describe('Controller: LoginCtrl', function() {
     var steroidsViewNavigationBarSetButtonsCallsLength = steroids.view.navigationBar.setButtons.calls.length;
     var locationPathCallsLength = location.path.calls.length;
     scope.submit();
-    expect(userService.login).toHaveBeenCalled();
+    expect(userService.logIn).toHaveBeenCalled();
     expect(navigator.notification.alert).toHaveBeenCalledWith('Error!', jasmine.any(Function));
     expect(steroids.view.navigationBar.setButtons.calls.length).toEqual(steroidsViewNavigationBarSetButtonsCallsLength);
     expect(location.path.calls.length).toEqual(locationPathCallsLength);
@@ -137,7 +137,7 @@ describe('Controller: LoginCtrl', function() {
     scope.username = 'username';
     scope.password = 'password';
     scope.submit();
-    expect(userService.login).toHaveBeenCalledWith(
+    expect(userService.logIn).toHaveBeenCalledWith(
       scope.username, scope.password,
       jasmine.any(Function), jasmine.any(Function)
     );
@@ -164,7 +164,7 @@ describe('Controller: SignupCtrl', function() {
     userService = _userService_;
 
     spyOn(location, 'path').andCallThrough();
-    spyOn(userService, 'signup').andCallThrough();
+    spyOn(userService, 'signUp').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'setButtons').andCallThrough();
 
@@ -200,7 +200,7 @@ describe('Controller: SignupCtrl', function() {
     var steroidsViewNavigationBarSetButtonsCallsLength = steroids.view.navigationBar.setButtons.calls.length;
     var locationPathCallsLength = location.path.calls.length;
     scope.submit();
-    expect(userService.signup).toHaveBeenCalled();
+    expect(userService.signUp).toHaveBeenCalled();
     expect(navigator.notification.alert).toHaveBeenCalledWith('Error!', jasmine.any(Function));
     expect(steroids.view.navigationBar.setButtons.calls.length).toEqual(steroidsViewNavigationBarSetButtonsCallsLength);
     expect(location.path.calls.length).toEqual(locationPathCallsLength);
@@ -220,7 +220,7 @@ describe('Controller: SignupCtrl', function() {
     scope.email = 'email';
     scope.password = 'password';
     scope.submit();
-    expect(userService.signup).toHaveBeenCalledWith(
+    expect(userService.signUp).toHaveBeenCalledWith(
       scope.age, scope.gender, scope.city, scope.country,
       scope.religion, scope.family, scope.self, scope.community, scope.career,
       scope.username, scope.email, scope.password,
