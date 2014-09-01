@@ -29,7 +29,7 @@ halalarControllers.controller('MainCtrl', ['$scope', '$location', 'userService',
   };
 }]);
 
-halalarControllers.controller('LoginCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
+halalarControllers.controller('LoginCtrl', ['$scope', 'userService', function($scope, userService) {
   steroids.view.navigationBar.show('Log in');
 
   var backButton = new steroids.buttons.NavigationBarButton();
@@ -38,9 +38,7 @@ halalarControllers.controller('LoginCtrl', ['$scope', '$location', 'userService'
     steroids.view.navigationBar.setButtons({
       left: []
     });
-    $scope.$apply(function() {
-      $location.path('/main');
-    });
+    history.back();
   };
 
   steroids.view.navigationBar.setButtons({
@@ -63,7 +61,7 @@ halalarControllers.controller('LoginCtrl', ['$scope', '$location', 'userService'
   };
 }]);
 
-halalarControllers.controller('SignupCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
+halalarControllers.controller('SignupCtrl', ['$scope', 'userService', function($scope, userService) {
   steroids.view.navigationBar.show('Sign up');
 
   var backButton = new steroids.buttons.NavigationBarButton();
@@ -72,9 +70,7 @@ halalarControllers.controller('SignupCtrl', ['$scope', '$location', 'userService
     steroids.view.navigationBar.setButtons({
       left: []
     });
-    $scope.$apply(function() {
-      $location.path('/main');
-    });
+    history.back();
   };
 
   steroids.view.navigationBar.setButtons({
