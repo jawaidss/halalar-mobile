@@ -1,5 +1,7 @@
 'use strict';
 
+/*global HELP_TEXT:false */
+
 describe('Controller: MainCtrl', function() {
 
   // load the controller's module
@@ -166,7 +168,10 @@ describe('Controller: SignupCtrl', function() {
     spyOn(location, 'path').andCallThrough();
     spyOn(userService, 'signUp').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
+    spyOn(steroids.view.navigationBar, 'hide').andCallThrough();
     spyOn(steroids.view.navigationBar, 'setButtons').andCallThrough();
+    spyOn(steroids.statusBar, 'hide').andCallThrough();
+    spyOn(steroids.statusBar, 'show').andCallThrough();
 
     navigator.notification = {
       alert: jasmine.createSpy('alert').andCallFake(function() {
@@ -229,5 +234,22 @@ describe('Controller: SignupCtrl', function() {
     expect(navigator.notification.alert).toHaveBeenCalledWith('Signed up!', jasmine.any(Function));
     expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({left: []});
     expect(location.path).toHaveBeenCalledWith('/main');
+  });
+
+  it('should show and hide a modal', function() {
+    scope.showModal('religion', 'Religion');
+    expect(steroids.statusBar.hide).toHaveBeenCalled();
+    expect(steroids.view.navigationBar.hide).toHaveBeenCalled();
+    expect(scope.modal).toBeTruthy();
+    expect(scope.field).toEqual('religion');
+    expect(scope.fieldTitle).toEqual('Religion');
+    expect(scope.fieldHelpText).toEqual(HELP_TEXT.religion);
+    expect(scope.temporaryField).toEqual(scope.religion);
+
+    scope.temporaryField = 'Test';
+    scope.hideModal();
+    expect(steroids.statusBar.show).toHaveBeenCalled();
+    expect(steroids.view.navigationBar.show.calls.length).toEqual(2);
+    expect(scope.religion).toEqual('Test');
   });
 });

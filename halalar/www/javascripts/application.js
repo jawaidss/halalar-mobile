@@ -11,3 +11,11 @@ halalarApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/signup', {templateUrl: 'partials/signup.html', controller: 'SignupCtrl'});
   $routeProvider.otherwise({redirectTo: '/main'});
 }]);
+
+var HELP_TEXT = {
+  religion: 'Mauris in dui vestibulum, tristique enim ultricies, blandit quam. Ut non dolor arcu. Aliquam gravida vitae elit dignissim.',
+  family: 'Donec dolor quam, vulputate volutpat nisi id, eleifend faucibus lorem. Nulla facilisi. Integer viverra, nisl rutrum tincidunt.',
+  self: 'Mauris in dui vestibulum, tristique enim ultricies, blandit quam. Ut non dolor arcu. Aliquam gravida vitae elit dignissim.',
+  community: 'Ut tincidunt consequat magna at hendrerit. Sed vitae mi ac urna volutpat hendrerit. Vivamus porta dapibus enim. Morbi.',
+  career: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+};

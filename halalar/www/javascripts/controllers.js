@@ -1,5 +1,7 @@
 'use strict';
 
+/*global HELP_TEXT:false */
+
 var halalarControllers = angular.module('halalarControllers', ['halalarServices']);
 
 halalarControllers.controller('MainCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
@@ -80,8 +82,21 @@ halalarControllers.controller('SignupCtrl', ['$scope', '$location', 'userService
     overrideBackButton: true
   });
 
-  $scope.modal = function(field) {
-    $scope[field] = 'Nice!'; // TODO
+  $scope.showModal = function(field, title) {
+    steroids.statusBar.hide();
+    steroids.view.navigationBar.hide();
+    $scope.modal = true;
+    $scope.field = field;
+    $scope.fieldTitle = title;
+    $scope.fieldHelpText = HELP_TEXT[field];
+    $scope.temporaryField = $scope[field];
+  };
+
+  $scope.hideModal = function() {
+    $scope[$scope.field] = $scope.temporaryField;
+    $scope.modal = false;
+    steroids.view.navigationBar.show();
+    steroids.statusBar.show();
   };
 
   $scope.submit = function() {

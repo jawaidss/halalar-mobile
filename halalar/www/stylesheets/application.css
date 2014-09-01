@@ -3,3 +3,7 @@ body {
 	https://github.com/AppGyver/steroids/issues/381 */
 	background-color:#fff;
 }
+
+textarea {
+  height: 15em;
+}
