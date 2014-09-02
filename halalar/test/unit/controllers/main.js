@@ -37,13 +37,8 @@ describe('Controller: MainCtrl', function() {
     expect(scope.user).toEqual(userService.getUser());
   });
 
-  it('should change the path to the login page', function() {
-    scope.logIn();
-    expect(location.path).toHaveBeenCalledWith('/login');
-  });
-
-  it('should change the path to the signup page', function() {
-    scope.signUp();
+  it('should redirect', function() {
+    scope.redirect('/signup');
     expect(location.path).toHaveBeenCalledWith('/signup');
   });
 

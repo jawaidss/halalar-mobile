@@ -3,14 +3,29 @@
     Salaam {{ user }}
   </div>
 
-  <a class="item item-icon-left" ng-click="logIn()" ng-hide="user">
+  <a class="item item-icon-left" ng-click="redirect('/login')" ng-hide="user">
     <i class="icon ion-log-in"></i>
     Log in
   </a>
 
-  <a class="item item-icon-left" ng-click="signUp()" ng-hide="user">
+  <a class="item item-icon-left" ng-click="redirect('/signup')" ng-hide="user">
     <i class="icon ion-person-add"></i>
     Sign up
+  </a>
+
+  <a class="item item-icon-left" ng-click="redirect('/browse')" ng-show="user">
+    <i class="icon ion-navicon"></i>
+    Browse
+  </a>
+
+  <a class="item item-icon-left" ng-click="redirect('/conversations')" ng-show="user">
+    <i class="icon ion-chatboxes"></i>
+    Conversations
+  </a>
+
+  <a class="item item-icon-left" ng-click="redirect('/profile')" ng-show="user">
+    <i class="icon ion-person"></i>
+    Profile
   </a>
 
   <a class="item item-icon-left" ng-click="logOut()" ng-show="user">

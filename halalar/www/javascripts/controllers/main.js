@@ -5,12 +5,8 @@ angular.module('halalarControllers').controller('MainCtrl', ['$scope', '$locatio
 
   $scope.user = userService.getUser();
 
-  $scope.logIn = function() {
-    $location.path('/login');
-  };
-
-  $scope.signUp = function() {
-    $location.path('/signup');
+  $scope.redirect = function(path) {
+    $location.path(path);
   };
 
   $scope.logOut = function() {
