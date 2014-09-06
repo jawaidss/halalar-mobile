@@ -2,7 +2,7 @@
 
 /*global HELP_TEXT:false */
 
-angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', 'userService', 'profileService', function($scope, userService, profileService) {
+angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$location', '$anchorScroll', 'userService', 'profileService', function($scope, $location, $anchorScroll, userService, profileService) {
   var user = userService.getUser();
   steroids.view.navigationBar.show(user.username);
   $scope.username = user.username;
@@ -48,7 +48,9 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', 'userS
     $scope.modal = false;
     steroids.view.navigationBar.show();
     steroids.statusBar.show();
-  }; // TODO
+    $location.hash($scope.field).replace();
+    $anchorScroll();
+  };
 
   $scope.submit = function() {
     profileService.editProfile(

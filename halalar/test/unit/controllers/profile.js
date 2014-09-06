@@ -9,15 +9,21 @@ describe('Controller: ProfileCtrl', function() {
 
   var ProfileCtrl,
     scope,
+    location,
+    anchorScroll,
     userService,
     profileService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, _userService_, _profileService_) {
+  beforeEach(inject(function($controller, $rootScope, $location, _userService_, _profileService_) {
     scope = $rootScope.$new();
+    location = $location;
+    anchorScroll = jasmine.createSpy('$anchorScroll');
     userService = _userService_;
     profileService = _profileService_;
 
+    spyOn(location, 'hash').andCallThrough();
+    spyOn(location, 'replace').andCallThrough();
     spyOn(history, 'back').andCallThrough();
     spyOn(userService, 'getUser').andReturn({username: 'samad', token: 'temp123'});
     spyOn(profileService, 'getProfile').andCallThrough();
@@ -37,6 +43,7 @@ describe('Controller: ProfileCtrl', function() {
     ProfileCtrl = $controller('ProfileCtrl', {
       $scope: scope,
       $location: location,
+      $anchorScroll: anchorScroll,
       userService: userService,
       profileService: profileService
     });
@@ -97,5 +104,8 @@ describe('Controller: ProfileCtrl', function() {
     expect(steroids.statusBar.show).toHaveBeenCalled();
     expect(steroids.view.navigationBar.show.calls.length).toEqual(2);
     expect(scope.religion).toEqual('Test');
+    expect(location.hash).toHaveBeenCalledWith(scope.field);
+    expect(location.replace).toHaveBeenCalled();
+    expect(anchorScroll).toHaveBeenCalled();
   });
 });

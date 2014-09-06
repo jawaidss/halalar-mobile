@@ -2,7 +2,7 @@
 
 /*global HELP_TEXT:false */
 
-angular.module('halalarControllers').controller('SignupCtrl', ['$scope', 'userService', function($scope, userService) {
+angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$location', '$anchorScroll', 'userService', function($scope, $location, $anchorScroll, userService) {
   steroids.view.navigationBar.show('Sign up');
 
   var backButton = new steroids.buttons.NavigationBarButton();
@@ -34,7 +34,9 @@ angular.module('halalarControllers').controller('SignupCtrl', ['$scope', 'userSe
     $scope.modal = false;
     steroids.view.navigationBar.show();
     steroids.statusBar.show();
-  }; // TODO
+    $location.hash($scope.field).replace();
+    $anchorScroll();
+  };
 
   $scope.submit = function() {
     userService.signUp(

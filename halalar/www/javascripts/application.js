@@ -6,7 +6,7 @@ angular.module('halalarControllers', ['halalarServices']);
 angular.module('halalarApp', [
   'ngRoute',
   'halalarControllers'
-]).config(['$routeProvider', function($routeProvider) {
+]).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider.when('/main', {templateUrl: 'partials/main.html', controller: 'MainCtrl'});
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'});
   $routeProvider.when('/signup', {templateUrl: 'partials/signup.html', controller: 'SignupCtrl'});
@@ -15,6 +15,7 @@ angular.module('halalarApp', [
   $routeProvider.when('/conversations/:username', {templateUrl: 'partials/conversation.html', controller: 'ConversationCtrl'});
   $routeProvider.when('/profile', {templateUrl: 'partials/profile.html', controller: 'ProfileCtrl'});
   $routeProvider.otherwise({redirectTo: '/main'});
+  $locationProvider.html5Mode(true);
 }]);
 
 var HELP_TEXT = { // TODO

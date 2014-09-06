@@ -9,13 +9,19 @@ describe('Controller: SignupCtrl', function() {
 
   var SignupCtrl,
     scope,
+    location,
+    anchorScroll,
     userService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, _userService_) {
+  beforeEach(inject(function($controller, $rootScope, $location, _userService_) {
     scope = $rootScope.$new();
+    location = $location;
+    anchorScroll = jasmine.createSpy('$anchorScroll');
     userService = _userService_;
 
+    spyOn(location, 'hash').andCallThrough();
+    spyOn(location, 'replace').andCallThrough();
     spyOn(history, 'back').andCallThrough();
     spyOn(userService, 'signUp').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
@@ -32,6 +38,8 @@ describe('Controller: SignupCtrl', function() {
 
     SignupCtrl = $controller('SignupCtrl', {
       $scope: scope,
+      $location: location,
+      $anchorScroll: anchorScroll,
       userService: userService
     });
   }));
@@ -101,5 +109,8 @@ describe('Controller: SignupCtrl', function() {
     expect(steroids.statusBar.show).toHaveBeenCalled();
     expect(steroids.view.navigationBar.show.calls.length).toEqual(2);
     expect(scope.religion).toEqual('Test');
+    expect(location.hash).toHaveBeenCalledWith(scope.field);
+    expect(location.replace).toHaveBeenCalled();
+    expect(anchorScroll).toHaveBeenCalled();
   });
 });
