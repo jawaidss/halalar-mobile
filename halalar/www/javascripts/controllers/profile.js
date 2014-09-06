@@ -3,18 +3,21 @@
 /*global HELP_TEXT:false */
 
 angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', 'userService', function($scope, userService) {
-  steroids.view.navigationBar.show(userService.getUser());
-  $scope.age = 23;
-  $scope.gender = 'Male';
-  $scope.city = 'Louisville';
-  $scope.country = 'United States of America';
-  $scope.religion = 'religion';
-  $scope.family = 'family';
-  $scope.self = 'self';
-  $scope.community = 'community';
-  $scope.career = 'career';
-  $scope.username = 'temp123';
-  $scope.email = 'samad@halalar.com';
+  var user = userService.getUser();
+  steroids.view.navigationBar.show(user.username);
+  $scope.username = user.username;
+
+  var profile = userService.getProfile();
+  $scope.age = profile.age;
+  $scope.gender = profile.gender;
+  $scope.city = profile.city;
+  $scope.country = profile.country;
+  $scope.religion = profile.religion;
+  $scope.family = profile.family;
+  $scope.self = profile.self;
+  $scope.community = profile.community;
+  $scope.career = profile.career;
+  $scope.email = profile.email;
 
   var backButton = new steroids.buttons.NavigationBarButton();
   backButton.title = 'Back';
@@ -45,11 +48,11 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', 'userS
     $scope.modal = false;
     steroids.view.navigationBar.show();
     steroids.statusBar.show();
-  };
+  }; // TODO
 
   $scope.submit = function() {
     userService.edit(
-      $scope.age, $scope.city, $scope.country,
+      user.token, $scope.age, $scope.city, $scope.country,
       $scope.religion, $scope.family, $scope.self, $scope.community, $scope.career,
       function() {
         navigator.notification.alert('Saved!', function() {

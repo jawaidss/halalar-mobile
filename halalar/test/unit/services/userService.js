@@ -19,8 +19,9 @@ describe('Service: userService', function() {
   }));
 
   it('should get the current user', function() {
-    userService.getUser();
+    var user = userService.getUser();
     expect(localStorageService.get).toHaveBeenCalledWith('user');
+    expect(user).toEqual({username: 'samad', token: 'temp123'});
   });
 
   it('should log in', function() {
@@ -29,7 +30,7 @@ describe('Service: userService', function() {
     var successCallback = jasmine.createSpy('successCallback');
     var errorCallback = jasmine.createSpy('errorCallback');
     userService.logIn(username, password, successCallback, errorCallback);
-    expect(localStorageService.set).toHaveBeenCalledWith('user', 'temp123');
+    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: 'samad', token: 'temp123'});
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 
@@ -61,7 +62,7 @@ describe('Service: userService', function() {
       username, email, password,
       successCallback, errorCallback
     );
-    expect(localStorageService.set).toHaveBeenCalledWith('user', 'temp123');
+    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: 'samad', token: 'temp123'});
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 
@@ -80,5 +81,34 @@ describe('Service: userService', function() {
   it('should log out', function() {
     userService.logOut();
     expect(localStorageService.remove).toHaveBeenCalledWith('user');
+  });
+
+  it('should edit', function() {
+    var age = 18;
+    var city = 'city';
+    var country = 'country';
+    var religion = 'religion';
+    var family = 'family';
+    var self = 'self';
+    var community = 'community';
+    var career = 'career';
+    var successCallback = jasmine.createSpy('successCallback');
+    var errorCallback = jasmine.createSpy('errorCallback');
+    userService.edit(
+      'temp123', age, city, country,
+      religion, family, self, community, career,
+      successCallback, errorCallback
+    );
+    expect(successCallback).toHaveBeenCalled();
+    expect(errorCallback).not.toHaveBeenCalled();
+
+    age = 19;
+    userService.edit(
+      'temp123', age, city, country,
+      religion, family, self, community, career,
+      successCallback, errorCallback
+    );
+    expect(successCallback.calls.length).toEqual(1);
+    expect(errorCallback).toHaveBeenCalled();
   });
 });

@@ -5,9 +5,27 @@ angular.module('halalarServices').service('userService', ['localStorageService',
     return localStorageService.get('user');
   };
 
+  this.getProfile = function() {
+    return { // TODO
+      age: 23,
+      gender: 'Male',
+      city: 'Louisville',
+      country: 'United States of America',
+      religion: 'religion',
+      family: 'family',
+      self: 'self',
+      community: 'community',
+      career: 'career',
+      email: 'samad@halalar.com'
+    };
+  };
+
   this.logIn = function(username, password, successCallback, errorCallback) {
     if (username) { // TODO
-      localStorageService.set('user', 'temp123');
+      localStorageService.set('user', {
+        username: 'samad',
+        token: 'temp123'
+      });
       successCallback();
     } else {
       errorCallback();
@@ -19,7 +37,10 @@ angular.module('halalarServices').service('userService', ['localStorageService',
                          username, email, password,
                          successCallback, errorCallback) {
     if (username) { // TODO
-      localStorageService.set('user', 'temp123');
+      localStorageService.set('user', {
+        username: 'samad',
+        token: 'temp123'
+      });
       successCallback();
     } else {
       errorCallback();
@@ -30,7 +51,7 @@ angular.module('halalarServices').service('userService', ['localStorageService',
     localStorageService.remove('user');
   };
 
-  this.edit = function(age, city, country,
+  this.edit = function(token, age, city, country,
                        religion, family, self, community, career,
                        successCallback, errorCallback) {
     if (age === 18) { // TODO

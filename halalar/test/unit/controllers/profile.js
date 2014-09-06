@@ -17,7 +17,8 @@ describe('Controller: ProfileCtrl', function() {
     userService = _userService_;
 
     spyOn(history, 'back').andCallThrough();
-    spyOn(userService, 'getUser').andReturn('temp123');
+    spyOn(userService, 'getUser').andReturn({username: 'samad', token: 'temp123'});
+    spyOn(userService, 'getProfile').andCallThrough();
     spyOn(userService, 'edit').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'hide').andCallThrough();
@@ -40,7 +41,8 @@ describe('Controller: ProfileCtrl', function() {
 
   it('should change the navigation bar title and buttons', function() {
     expect(userService.getUser).toHaveBeenCalled();
-    expect(steroids.view.navigationBar.show).toHaveBeenCalledWith('temp123');
+    expect(userService.getProfile).toHaveBeenCalled();
+    expect(steroids.view.navigationBar.show).toHaveBeenCalledWith('samad');
     expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({
       left: [jasmine.any(Object)],
       overrideBackButton: true
@@ -68,7 +70,7 @@ describe('Controller: ProfileCtrl', function() {
     scope.age = 18;
     scope.submit();
     expect(userService.edit).toHaveBeenCalledWith(
-      scope.age, scope.city, scope.country,
+      'temp123', scope.age, scope.city, scope.country,
       scope.religion, scope.family, scope.self, scope.community, scope.career,
       jasmine.any(Function), jasmine.any(Function)
     );

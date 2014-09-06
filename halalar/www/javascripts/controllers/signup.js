@@ -34,7 +34,7 @@ angular.module('halalarControllers').controller('SignupCtrl', ['$scope', 'userSe
     $scope.modal = false;
     steroids.view.navigationBar.show();
     steroids.statusBar.show();
-  };
+  }; // TODO
 
   $scope.submit = function() {
     userService.signUp(
