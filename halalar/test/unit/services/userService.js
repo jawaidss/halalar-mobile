@@ -82,33 +82,4 @@ describe('Service: userService', function() {
     userService.logOut();
     expect(localStorageService.remove).toHaveBeenCalledWith('user');
   });
-
-  it('should edit', function() {
-    var age = 18;
-    var city = 'city';
-    var country = 'country';
-    var religion = 'religion';
-    var family = 'family';
-    var self = 'self';
-    var community = 'community';
-    var career = 'career';
-    var successCallback = jasmine.createSpy('successCallback');
-    var errorCallback = jasmine.createSpy('errorCallback');
-    userService.edit(
-      'temp123', age, city, country,
-      religion, family, self, community, career,
-      successCallback, errorCallback
-    );
-    expect(successCallback).toHaveBeenCalled();
-    expect(errorCallback).not.toHaveBeenCalled();
-
-    age = 19;
-    userService.edit(
-      'temp123', age, city, country,
-      religion, family, self, community, career,
-      successCallback, errorCallback
-    );
-    expect(successCallback.calls.length).toEqual(1);
-    expect(errorCallback).toHaveBeenCalled();
-  });
 });

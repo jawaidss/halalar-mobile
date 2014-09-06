@@ -2,12 +2,12 @@
 
 /*global HELP_TEXT:false */
 
-angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', 'userService', function($scope, userService) {
+angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', 'userService', 'profileService', function($scope, userService, profileService) {
   var user = userService.getUser();
   steroids.view.navigationBar.show(user.username);
   $scope.username = user.username;
 
-  var profile = userService.getProfile();
+  var profile = profileService.getProfile();
   $scope.age = profile.age;
   $scope.gender = profile.gender;
   $scope.city = profile.city;
@@ -51,7 +51,7 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', 'userS
   }; // TODO
 
   $scope.submit = function() {
-    userService.edit(
+    profileService.editProfile(
       user.token, $scope.age, $scope.city, $scope.country,
       $scope.religion, $scope.family, $scope.self, $scope.community, $scope.career,
       function() {
