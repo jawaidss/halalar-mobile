@@ -1,1 +1,94 @@
-<h1>Profile</h1>
+<div ng-hide="modal">
+  <div class="list">
+    <label class="item item-input">
+      <span class="input-label">Age</span>
+      <input type="number" ng-model="age">
+    </label>
+    <div class="item item-divider">
+      Gender
+    </div>
+    <div class="item">
+      {{ gender }}
+    </div>
+    <div class="item item-divider">
+      Location
+    </div>
+    <label class="item item-input">
+      <span class="input-label">City</span>
+      <input type="text" ng-model="city">
+    </label>
+    <label class="item item-input item-select">
+      <div class="input-label">
+        Country
+      </div>
+      <select ng-model="country"><!-- TODO -->
+        <option value="United States of America">United States of America</option>
+        <option value="Canada">Canada</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="list">
+    <a class="item item-icon-left" ng-class="{'item-stable': religion}" ng-click="showModal('religion', 'Religion')">
+      <i class="icon ion-star"></i>
+      <h2>Religion</h2>
+      <p ng-show="religion">{{ religion }}</p>
+    </a>
+    <a class="item item-icon-left" ng-class="{'item-stable': family}" ng-click="showModal('family', 'Family')">
+      <i class="icon ion-person-stalker"></i>
+      <h2>Family</h2>
+      <p ng-show="family">{{ family }}</p>
+    </a>
+    <a class="item item-icon-left" ng-class="{'item-stable': self}" ng-click="showModal('self', 'Self')">
+      <i class="icon ion-person"></i>
+      <h2>Self</h2>
+      <p ng-show="self">{{ self }}</p>
+    </a>
+    <a class="item item-icon-left" ng-class="{'item-stable': community}" ng-click="showModal('community', 'Community')">
+      <i class="icon ion-home"></i>
+      <h2>Community</h2>
+      <p ng-show="community">{{ community }}</p>
+    </a>
+    <a class="item item-icon-left" ng-class="{'item-stable': career}" ng-click="showModal('career', 'Career')">
+      <i class="icon ion-briefcase"></i>
+      <h2>Career</h2>
+      <p ng-show="career">{{ career }}</p>
+    </a>
+  </div>
+
+  <div class="list">
+    <div class="item item-divider">
+      Username
+    </div>
+    <div class="item">
+      {{ username }}
+    </div>
+    <div class="item item-divider">
+      Email address
+    </div>
+    <div class="item">
+      {{ email }}
+    </div>
+  </div>
+
+  <button class="button button-block button-positive" ng-click="submit()">
+    Submit
+  </button>
+</div>
+
+<div class="card" ng-show="modal">
+  <div class="item item-divider">
+    {{ fieldTitle }}
+  </div>
+  <div class="item item-text-wrap">
+    {{ fieldHelpText }}
+  </div>
+  <label class="item item-input">
+    <textarea ng-model="temporaryField" placeholder="{{ fieldTitle }}&hellip;"></textarea>
+  </label>
+  <div class="item item-divider">
+    <button class="button button-block button-positive" ng-click="hideModal()">
+      Done
+    </button>
+  </div>
+</div>

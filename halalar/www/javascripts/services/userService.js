@@ -29,4 +29,14 @@ angular.module('halalarServices').service('userService', ['localStorageService',
   this.logOut = function() {
     localStorageService.remove('user');
   };
+
+  this.edit = function(age, city, country,
+                       religion, family, self, community, career,
+                       successCallback, errorCallback) {
+    if (age === 18) { // TODO
+      successCallback();
+    } else {
+      errorCallback();
+    }
+  };
 }]);

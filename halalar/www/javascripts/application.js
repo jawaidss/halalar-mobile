@@ -17,7 +17,7 @@ angular.module('halalarApp', [
   $routeProvider.otherwise({redirectTo: '/main'});
 }]);
 
-var HELP_TEXT = {
+var HELP_TEXT = { // TODO
   religion: 'Mauris in dui vestibulum, tristique enim ultricies, blandit quam. Ut non dolor arcu. Aliquam gravida vitae elit dignissim.',
   family: 'Donec dolor quam, vulputate volutpat nisi id, eleifend faucibus lorem. Nulla facilisi. Integer viverra, nisl rutrum tincidunt.',
   self: 'Mauris in dui vestibulum, tristique enim ultricies, blandit quam. Ut non dolor arcu. Aliquam gravida vitae elit dignissim.',
