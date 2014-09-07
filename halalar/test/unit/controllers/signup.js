@@ -1,6 +1,9 @@
 'use strict';
 
 /*global HELP_TEXT:false */
+/*global GENDERS:false */
+/*global COUNTRIES:false */
+/*global DEFAULT_COUNTRY:false */
 
 describe('Controller: SignupCtrl', function() {
 
@@ -55,6 +58,10 @@ describe('Controller: SignupCtrl', function() {
 
     var backButton = steroids.view.navigationBar.update.mostRecentCall.args[0].buttons.left[0];
     expect(backButton.title).toEqual('Back');
+
+    expect(scope.GENDERS).toEqual(GENDERS);
+    expect(scope.COUNTRIES).toEqual(COUNTRIES);
+    expect(scope.country).toEqual(DEFAULT_COUNTRY);
 
     backButton.onTap();
     expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: []}});

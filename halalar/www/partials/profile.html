@@ -8,7 +8,7 @@
       Gender
     </div>
     <div class="item">
-      {{ gender }}
+      {{ GENDERS[gender] }}
     </div>
     <div class="item item-divider">
       Location
@@ -21,10 +21,7 @@
       <div class="input-label">
         Country
       </div>
-      <select ng-model="country"><!-- TODO -->
-        <option value="United States of America">United States of America</option>
-        <option value="Canada">Canada</option>
-      </select>
+      <select ng-model="country" ng-options="key as value for (key , value) in COUNTRIES"></select>
     </label>
   </div>
 

@@ -4,9 +4,9 @@ angular.module('halalarServices').service('profileService', [function profileSer
   this.getProfile = function(token) {
     return { // TODO
       age: 23,
-      gender: 'Male',
+      gender: 'male',
       city: 'Louisville',
-      country: 'United States of America',
+      country: 'US',
       religion: 'religion',
       family: 'family',
       self: 'self',
@@ -29,9 +29,9 @@ angular.module('halalarServices').service('profileService', [function profileSer
   this.getRandomProfile = function(token) {
     return { // TODO
       age: 21,
-      gender: 'Female',
+      gender: 'female',
       city: 'Seattle',
-      country: 'United States of America',
+      country: 'US',
       religion: 'religion',
       family: 'family',
       self: 'self',

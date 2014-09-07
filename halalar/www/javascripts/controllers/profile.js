@@ -1,6 +1,8 @@
 'use strict';
 
 /*global HELP_TEXT:false */
+/*global GENDERS:false */
+/*global COUNTRIES:false */
 
 angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$location', '$anchorScroll', 'userService', 'profileService', function($scope, $location, $anchorScroll, userService, profileService) {
   var user = userService.getUser();
@@ -36,6 +38,9 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$loca
       overrideBackButton: true
     }
   });
+
+  $scope.GENDERS = GENDERS;
+  $scope.COUNTRIES = COUNTRIES;
 
   $scope.showModal = function(field, title) {
     steroids.statusBar.hide();

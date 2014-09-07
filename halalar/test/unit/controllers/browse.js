@@ -1,5 +1,8 @@
 'use strict';
 
+/*global GENDERS:false */
+/*global COUNTRIES:false */
+
 describe('Controller: BrowseCtrl', function() {
 
   // load the controller's module
@@ -43,6 +46,9 @@ describe('Controller: BrowseCtrl', function() {
 
     var backButton = steroids.view.navigationBar.update.calls[0].args[0].buttons.left[0];
     expect(backButton.title).toEqual('Back');
+
+    expect(scope.GENDERS).toEqual(GENDERS);
+    expect(scope.COUNTRIES).toEqual(COUNTRIES);
 
     backButton.onTap();
     expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: []}});

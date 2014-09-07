@@ -7,17 +7,10 @@
     <div class="item item-divider">
       Gender
     </div>
-    <label class="item item-radio">
-      <input type="radio" name="gender" value="male" ng-model="gender">
+    <label class="item item-radio" ng-repeat="(key, value) in GENDERS">
+      <input type="radio" name="gender" value="{{ key }}" ng-model="gender">
       <div class="item-content">
-        Male
-      </div>
-      <i class="radio-icon ion-checkmark"></i>
-    </label>
-    <label class="item item-radio">
-      <input type="radio" name="gender" value="female" ng-model="gender">
-      <div class="item-content">
-        Female
+        {{ value }}
       </div>
       <i class="radio-icon ion-checkmark"></i>
     </label>
@@ -32,10 +25,7 @@
       <div class="input-label">
         Country
       </div>
-      <select ng-model="country"><!-- TODO -->
-        <option value="United States of America">United States of America</option>
-        <option value="Canada">Canada</option>
-      </select>
+      <select ng-model="country" ng-options="key as value for (key , value) in COUNTRIES"></select>
     </label>
   </div>
 

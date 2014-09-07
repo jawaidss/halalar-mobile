@@ -13,12 +13,12 @@ describe('Service: profileService', function() {
   }));
 
   it('should get the current profile', function() {
-    var profile = profileService.getProfile();
+    var profile = profileService.getProfile('temp123');
     expect(profile).toEqual({
       age: 23,
-      gender: 'Male',
+      gender: 'male',
       city: 'Louisville',
-      country: 'United States of America',
+      country: 'US',
       religion: 'religion',
       family: 'family',
       self: 'self',
@@ -55,5 +55,10 @@ describe('Service: profileService', function() {
     );
     expect(successCallback.calls.length).toEqual(1);
     expect(errorCallback).toHaveBeenCalled();
+  });
+
+  it('should get a random profile', function() {
+    var profile = profileService.getRandomProfile('temp123');
+    expect(profile).toEqual(jasmine.any(Object));
   });
 });

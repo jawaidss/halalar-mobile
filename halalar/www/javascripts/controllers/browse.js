@@ -1,5 +1,8 @@
 'use strict';
 
+/*global GENDERS:false */
+/*global COUNTRIES:false */
+
 angular.module('halalarControllers').controller('BrowseCtrl', ['$scope', '$location', 'userService', 'profileService', function($scope, $location, userService, profileService) {
   steroids.view.navigationBar.show('Browse');
 
@@ -20,6 +23,9 @@ angular.module('halalarControllers').controller('BrowseCtrl', ['$scope', '$locat
       overrideBackButton: true
     }
   });
+
+  $scope.GENDERS = GENDERS;
+  $scope.COUNTRIES = COUNTRIES;
 
   var user = userService.getUser();
 

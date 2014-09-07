@@ -1,6 +1,9 @@
 'use strict';
 
 /*global HELP_TEXT:false */
+/*global GENDERS:false */
+/*global COUNTRIES:false */
+/*global DEFAULT_COUNTRY:false */
 
 angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$location', '$anchorScroll', 'userService', function($scope, $location, $anchorScroll, userService) {
   steroids.view.navigationBar.show('Sign up');
@@ -22,6 +25,10 @@ angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$locat
       overrideBackButton: true
     }
   });
+
+  $scope.GENDERS = GENDERS;
+  $scope.COUNTRIES = COUNTRIES;
+  $scope.country = DEFAULT_COUNTRY;
 
   $scope.showModal = function(field, title) {
     steroids.statusBar.hide();
