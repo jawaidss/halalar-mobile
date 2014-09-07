@@ -30,7 +30,7 @@ describe('Controller: ProfileCtrl', function() {
     spyOn(profileService, 'editProfile').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'hide').andCallThrough();
-    spyOn(steroids.view.navigationBar, 'setButtons').andCallThrough();
+    spyOn(steroids.view.navigationBar, 'update').andCallThrough();
     spyOn(steroids.statusBar, 'hide').andCallThrough();
     spyOn(steroids.statusBar, 'show').andCallThrough();
 
@@ -51,28 +51,30 @@ describe('Controller: ProfileCtrl', function() {
 
   it('should change the navigation bar title and buttons', function() {
     expect(userService.getUser).toHaveBeenCalled();
-    expect(profileService.getProfile).toHaveBeenCalled();
+    expect(profileService.getProfile).toHaveBeenCalledWith('temp123');
     expect(steroids.view.navigationBar.show).toHaveBeenCalledWith('samad');
-    expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({
-      left: [jasmine.any(Object)],
-      overrideBackButton: true
+    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({
+      buttons: {
+        left: [jasmine.any(Object)],
+        overrideBackButton: true
+      }
     });
 
-    var backButton = steroids.view.navigationBar.setButtons.mostRecentCall.args[0].left[0];
+    var backButton = steroids.view.navigationBar.update.mostRecentCall.args[0].buttons.left[0];
     expect(backButton.title).toEqual('Back');
 
     backButton.onTap();
-    expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({left: []});
+    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: []}});
     expect(history.back).toHaveBeenCalled();
   });
 
   it('should not edit the current profile', function() {
-    var steroidsViewNavigationBarSetButtonsCallsLength = steroids.view.navigationBar.setButtons.calls.length;
+    var steroidsViewNavigationBarUpdateCallsLength = steroids.view.navigationBar.update.calls.length;
     var historyBackCallsLength = history.back.calls.length;
     scope.submit();
     expect(profileService.editProfile).toHaveBeenCalled();
     expect(navigator.notification.alert).toHaveBeenCalledWith('Error!', jasmine.any(Function));
-    expect(steroids.view.navigationBar.setButtons.calls.length).toEqual(steroidsViewNavigationBarSetButtonsCallsLength);
+    expect(steroids.view.navigationBar.update.calls.length).toEqual(steroidsViewNavigationBarUpdateCallsLength);
     expect(history.back.calls.length).toEqual(historyBackCallsLength);
   });
 
@@ -85,7 +87,7 @@ describe('Controller: ProfileCtrl', function() {
       jasmine.any(Function), jasmine.any(Function)
     );
     expect(navigator.notification.alert).toHaveBeenCalledWith('Saved!', jasmine.any(Function));
-    expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({left: []});
+    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: []}});
     expect(history.back).toHaveBeenCalled();
   });
 

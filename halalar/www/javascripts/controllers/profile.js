@@ -7,7 +7,7 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$loca
   steroids.view.navigationBar.show(user.username);
   $scope.username = user.username;
 
-  var profile = profileService.getProfile();
+  var profile = profileService.getProfile(user.token);
   $scope.age = profile.age;
   $scope.gender = profile.gender;
   $scope.city = profile.city;
@@ -22,15 +22,19 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$loca
   var backButton = new steroids.buttons.NavigationBarButton();
   backButton.title = 'Back';
   backButton.onTap = function() {
-    steroids.view.navigationBar.setButtons({
-      left: []
+    steroids.view.navigationBar.update({
+      buttons: {
+        left: []
+      }
     });
     history.back();
   };
 
-  steroids.view.navigationBar.setButtons({
-    left: [backButton],
-    overrideBackButton: true
+  steroids.view.navigationBar.update({
+    buttons: {
+      left: [backButton],
+      overrideBackButton: true
+    }
   });
 
   $scope.showModal = function(field, title) {

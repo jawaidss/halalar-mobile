@@ -26,7 +26,7 @@ describe('Controller: SignupCtrl', function() {
     spyOn(userService, 'signUp').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'hide').andCallThrough();
-    spyOn(steroids.view.navigationBar, 'setButtons').andCallThrough();
+    spyOn(steroids.view.navigationBar, 'update').andCallThrough();
     spyOn(steroids.statusBar, 'hide').andCallThrough();
     spyOn(steroids.statusBar, 'show').andCallThrough();
 
@@ -46,26 +46,28 @@ describe('Controller: SignupCtrl', function() {
 
   it('should change the navigation bar title and buttons', function() {
     expect(steroids.view.navigationBar.show).toHaveBeenCalledWith('Sign up');
-    expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({
-      left: [jasmine.any(Object)],
-      overrideBackButton: true
+    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({
+      buttons: {
+        left: [jasmine.any(Object)],
+        overrideBackButton: true
+      }
     });
 
-    var backButton = steroids.view.navigationBar.setButtons.mostRecentCall.args[0].left[0];
+    var backButton = steroids.view.navigationBar.update.mostRecentCall.args[0].buttons.left[0];
     expect(backButton.title).toEqual('Back');
 
     backButton.onTap();
-    expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({left: []});
+    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: []}});
     expect(history.back).toHaveBeenCalled();
   });
 
   it('should not sign up', function() {
-    var steroidsViewNavigationBarSetButtonsCallsLength = steroids.view.navigationBar.setButtons.calls.length;
+    var steroidsViewNavigationBarUpdateCallsLength = steroids.view.navigationBar.update.calls.length;
     var historyBackCallsLength = history.back.calls.length;
     scope.submit();
     expect(userService.signUp).toHaveBeenCalled();
     expect(navigator.notification.alert).toHaveBeenCalledWith('Error!', jasmine.any(Function));
-    expect(steroids.view.navigationBar.setButtons.calls.length).toEqual(steroidsViewNavigationBarSetButtonsCallsLength);
+    expect(steroids.view.navigationBar.update.calls.length).toEqual(steroidsViewNavigationBarUpdateCallsLength);
     expect(history.back.calls.length).toEqual(historyBackCallsLength);
   });
 
@@ -90,7 +92,7 @@ describe('Controller: SignupCtrl', function() {
       jasmine.any(Function), jasmine.any(Function)
     );
     expect(navigator.notification.alert).toHaveBeenCalledWith('Signed up!', jasmine.any(Function));
-    expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({left: []});
+    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: []}});
     expect(history.back).toHaveBeenCalled();
   });
 

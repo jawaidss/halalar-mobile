@@ -6,15 +6,19 @@ angular.module('halalarControllers').controller('LoginCtrl', ['$scope', 'userSer
   var backButton = new steroids.buttons.NavigationBarButton();
   backButton.title = 'Back';
   backButton.onTap = function() {
-    steroids.view.navigationBar.setButtons({
-      left: []
+    steroids.view.navigationBar.update({
+      buttons: {
+        left: []
+      }
     });
     history.back();
   };
 
-  steroids.view.navigationBar.setButtons({
-    left: [backButton],
-    overrideBackButton: true
+  steroids.view.navigationBar.update({
+    buttons: {
+      left: [backButton],
+      overrideBackButton: true
+    }
   });
 
   $scope.submit = function() {

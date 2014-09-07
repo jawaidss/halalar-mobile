@@ -18,7 +18,7 @@ describe('Controller: ConversationCtrl', function() {
 
     spyOn(history, 'back').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
-    spyOn(steroids.view.navigationBar, 'setButtons').andCallThrough();
+    spyOn(steroids.view.navigationBar, 'update').andCallThrough();
 
     ConversationCtrl = $controller('ConversationCtrl', {
       $scope: scope,
@@ -29,16 +29,18 @@ describe('Controller: ConversationCtrl', function() {
 
   it('should change the navigation bar title and buttons', function() {
     expect(steroids.view.navigationBar.show).toHaveBeenCalledWith('Conversation');
-    expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({
-      left: [jasmine.any(Object)],
-      overrideBackButton: true
+    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({
+      buttons: {
+        left: [jasmine.any(Object)],
+        overrideBackButton: true
+      }
     });
 
-    var backButton = steroids.view.navigationBar.setButtons.mostRecentCall.args[0].left[0];
+    var backButton = steroids.view.navigationBar.update.mostRecentCall.args[0].buttons.left[0];
     expect(backButton.title).toEqual('Back');
 
     backButton.onTap();
-    expect(steroids.view.navigationBar.setButtons).toHaveBeenCalledWith({left: []});
+    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: []}});
     expect(history.back).toHaveBeenCalled();
   });
 });

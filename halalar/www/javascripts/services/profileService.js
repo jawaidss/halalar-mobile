@@ -25,4 +25,19 @@ angular.module('halalarServices').service('profileService', [function profileSer
       errorCallback();
     }
   };
+
+  this.getRandomProfile = function(token) {
+    return { // TODO
+      age: 21,
+      gender: 'Female',
+      city: 'Seattle',
+      country: 'United States of America',
+      religion: 'religion',
+      family: 'family',
+      self: 'self',
+      community: 'community',
+      career: 'career',
+      username: (new Date()).getTime() + ''
+    };
+  };
 }]);
