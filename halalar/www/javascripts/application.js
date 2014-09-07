@@ -5,17 +5,17 @@ angular.module('halalarControllers', ['halalarServices']);
 
 angular.module('halalarApp', [
   'ngRoute',
+  'hmTouchEvents',
   'halalarControllers'
-]).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+]).config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/main', {templateUrl: 'partials/main.html', controller: 'MainCtrl'});
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'});
   $routeProvider.when('/signup', {templateUrl: 'partials/signup.html', controller: 'SignupCtrl'});
-  $routeProvider.when('/browse/:username?', {templateUrl: 'partials/browse.html', controller: 'BrowseCtrl'});
+  $routeProvider.when('/browse', {templateUrl: 'partials/browse.html', controller: 'BrowseCtrl'});
   $routeProvider.when('/conversations', {templateUrl: 'partials/conversations.html', controller: 'ConversationsCtrl'});
   $routeProvider.when('/conversations/:username', {templateUrl: 'partials/conversation.html', controller: 'ConversationCtrl'});
   $routeProvider.when('/profile', {templateUrl: 'partials/profile.html', controller: 'ProfileCtrl'});
   $routeProvider.otherwise({redirectTo: '/main'});
-  $locationProvider.html5Mode(true);
 }]);
 
 var HELP_TEXT = { // TODO

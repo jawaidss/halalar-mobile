@@ -15,6 +15,8 @@
     "angular": "~1.2.23",
     "angular-route": "~1.2.23",
     "angular-local-storage": "~0.0.7",
-    "angular-mocks": "~1.2.23"
+    "angular-mocks": "~1.2.23",
+    "hammerjs": "~2.0.2",
+    "angular-hammer": "monospaced/angular-hammer#~1.1.3"
   }
 }

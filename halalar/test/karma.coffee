@@ -17,6 +17,7 @@ module.exports = (config) ->
       'www/components/angular-mocks/angular-mocks.js'
       'www/components/angular-route/angular-route.min.js'
       'www/components/angular-local-storage/angular-local-storage.min.js'
+      'www/components/angular-hammer/angular-hammer.js'
       'www/javascripts/**/*.js'
       'test/unit/**/*.js'
     ]
