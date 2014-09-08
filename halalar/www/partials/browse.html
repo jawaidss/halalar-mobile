@@ -1,64 +1,64 @@
 <div hm-swipe="next()">
   <div class="list">
-    <div class="item item-divider">
-      Age
-    </div>
-    <div class="item">
-      {{ profile.age }}
-    </div>
-    <div class="item item-divider">
-      Gender
-    </div>
-    <div class="item">
-      {{ GENDERS[profile.gender] }}
-    </div>
-    <div class="item item-divider">
-      Location
-    </div>
-    <div class="item item-divider">
-      City
-    </div>
-    <div class="item">
-      {{ profile.city }}
-    </div>
-    <div class="item item-divider">
-      Country
-    </div>
-    <div class="item">
-      {{ COUNTRIES[profile.country] }}
+    <div class="item item-text-wrap">
+      <strong>Age</strong> {{ profile.age }}<br>
+      <strong>Gender</strong> {{ GENDERS[profile.gender] }}<br>
+      <strong>Location</strong> {{ profile.city }} <small>{{ COUNTRIES[profile.country] }}</small>
     </div>
   </div>
 
   <div class="list">
     <div class="item item-divider">
+      <i class="icon ion-star"></i>
       Religion
     </div>
-    <div class="item">
+    <div class="item item-text-wrap">
       {{ profile.religion }}
     </div>
+  </div>
+
+  <div class="list">
     <div class="item item-divider">
+      <i class="icon ion-person-stalker"></i>
       Family
     </div>
-    <div class="item">
+    <div class="item item-text-wrap">
       {{ profile.family }}
     </div>
+  </div>
+
+  <div class="list">
     <div class="item item-divider">
+      <i class="icon ion-person"></i>
       Self
     </div>
-    <div class="item">
+    <div class="item item-text-wrap">
       {{ profile.self }}
     </div>
+  </div>
+
+  <div class="list">
     <div class="item item-divider">
+      <i class="icon ion-home"></i>
       Community
     </div>
-    <div class="item">
+    <div class="item item-text-wrap">
       {{ profile.community }}
     </div>
+  </div>
+
+  <div class="list">
     <div class="item item-divider">
+      <i class="icon ion-briefcase"></i>
       Career
     </div>
-    <div class="item">
+    <div class="item item-text-wrap">
       {{ profile.career }}
     </div>
+  </div>
+
+  <div class="button-bar">
+    <button class="button button-assertive" ng-click="next()">Next</button>
+    <button class="button button-balanced">Halalar</button>
   </div>
 </div>

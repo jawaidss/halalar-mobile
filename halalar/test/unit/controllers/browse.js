@@ -11,6 +11,7 @@ describe('Controller: BrowseCtrl', function() {
   var BrowseCtrl,
     scope,
     location,
+    anchorScroll,
     userService,
     profileService;
 
@@ -18,6 +19,7 @@ describe('Controller: BrowseCtrl', function() {
   beforeEach(inject(function($controller, $rootScope, $location, _userService_, _profileService_) {
     scope = $rootScope.$new();
     location = $location;
+    anchorScroll = jasmine.createSpy('$anchorScroll');
     userService = _userService_;
     profileService = _profileService_;
 
@@ -30,6 +32,7 @@ describe('Controller: BrowseCtrl', function() {
     BrowseCtrl = $controller('BrowseCtrl', {
       $scope: scope,
       $location: location,
+      $anchorScroll: anchorScroll,
       userService: userService,
       profileService: profileService
     });
@@ -60,9 +63,11 @@ describe('Controller: BrowseCtrl', function() {
     expect(profileService.getRandomProfile).toHaveBeenCalledWith('temp123');
     expect(scope.profile).toEqual(jasmine.any(Object));
     expect(steroids.view.navigationBar.update.mostRecentCall.args[0]).toEqual(jasmine.any(String));
+    expect(anchorScroll).toHaveBeenCalled();
 
     scope.next();
     expect(profileService.getRandomProfile.calls.length).toEqual(2);
     expect(steroids.view.navigationBar.update.calls.length).toEqual(3);
+    expect(anchorScroll.calls.length).toEqual(2);
   });
 });
