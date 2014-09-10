@@ -24,6 +24,7 @@ describe('Controller: BrowseCtrl', function() {
     profileService = _profileService_;
 
     spyOn(history, 'back').andCallThrough();
+    spyOn(location, 'path').andCallThrough();
     spyOn(userService, 'getUser').andReturn({username: 'samad', token: 'temp123'});
     spyOn(profileService, 'getRandomProfile').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
@@ -69,5 +70,10 @@ describe('Controller: BrowseCtrl', function() {
     expect(profileService.getRandomProfile.calls.length).toEqual(2);
     expect(steroids.view.navigationBar.update.calls.length).toEqual(3);
     expect(anchorScroll.calls.length).toEqual(2);
+  });
+
+  it('should redirect', function() {
+    scope.redirect('/conversations/samad');
+    expect(location.path).toHaveBeenCalledWith('/conversations/samad');
   });
 });

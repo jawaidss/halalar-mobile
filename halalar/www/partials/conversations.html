@@ -1,1 +1,13 @@
-<h1>Conversations</h1>
+<div class="list" ng-show="conversations">
+  <a class="item" ng-repeat="conversation in conversations" ng-click="redirect('/conversations/' + conversation.username)">
+    <span class="item-note">{{ conversation.timestamp }}</span>
+    <h2>{{ conversation.username }}</h2>
+    <p>{{ conversation.message }}</p>
+  </a>
+</div>
+
+<div class="card" ng-hide="conversations">
+  <div class="item item-text-wrap item-positive">
+    No conversations yet
+  </div>
+</div>

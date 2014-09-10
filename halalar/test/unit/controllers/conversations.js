@@ -8,22 +8,28 @@ describe('Controller: ConversationsCtrl', function() {
   var ConversationsCtrl,
     scope,
     location,
-    userService;
+    userService,
+    conversationService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, $location, _userService_) {
+  beforeEach(inject(function($controller, $rootScope, $location, _userService_, _conversationService_) {
     scope = $rootScope.$new();
     location = $location;
     userService = _userService_;
+    conversationService = _conversationService_;
 
     spyOn(history, 'back').andCallThrough();
+    spyOn(location, 'path').andCallThrough();
+    spyOn(userService, 'getUser').andReturn({username: 'samad', token: 'temp123'});
+    spyOn(conversationService, 'getConversations').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'update').andCallThrough();
 
     ConversationsCtrl = $controller('ConversationsCtrl', {
       $scope: scope,
       $location: location,
-      userService: userService
+      userService: userService,
+      conversationService: conversationService
     });
   }));
 
@@ -42,5 +48,16 @@ describe('Controller: ConversationsCtrl', function() {
     backButton.onTap();
     expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: []}});
     expect(history.back).toHaveBeenCalled();
+  });
+
+  it('should attach all conversations to the scope', function() {
+    expect(userService.getUser).toHaveBeenCalled();
+    expect(conversationService.getConversations).toHaveBeenCalledWith('temp123');
+    expect(scope.conversations).toEqual(jasmine.any(Object));
+  });
+
+  it('should redirect', function() {
+    scope.redirect('/conversations/samad');
+    expect(location.path).toHaveBeenCalledWith('/conversations/samad');
   });
 });

@@ -29,6 +29,10 @@ angular.module('halalarControllers').controller('BrowseCtrl', ['$scope', '$locat
 
   var user = userService.getUser();
 
+  $scope.redirect = function(path) {
+    $location.path(path);
+  };
+
   $scope.next = function() {
     $scope.profile = profileService.getRandomProfile(user.token);
     steroids.view.navigationBar.update($scope.profile.username);
