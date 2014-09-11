@@ -11,31 +11,32 @@ describe('Controller: BrowseCtrl', function() {
   var BrowseCtrl,
     scope,
     location,
-    anchorScroll,
     userService,
-    profileService;
+    profileService,
+    scrollToService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, $location, _userService_, _profileService_) {
+  beforeEach(inject(function($controller, $rootScope, $location, _userService_, _profileService_, _scrollToService_) {
     scope = $rootScope.$new();
     location = $location;
-    anchorScroll = jasmine.createSpy('$anchorScroll');
     userService = _userService_;
     profileService = _profileService_;
+    scrollToService = _scrollToService_;
 
     spyOn(history, 'back').andCallThrough();
     spyOn(location, 'path').andCallThrough();
     spyOn(userService, 'getUser').andReturn({username: 'samad', token: 'temp123'});
     spyOn(profileService, 'getRandomProfile').andCallThrough();
+    spyOn(scrollToService, 'scrollToTop').andReturn();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'update').andCallThrough();
 
     BrowseCtrl = $controller('BrowseCtrl', {
       $scope: scope,
       $location: location,
-      $anchorScroll: anchorScroll,
       userService: userService,
-      profileService: profileService
+      profileService: profileService,
+      scrollToService: scrollToService
     });
   }));
 
@@ -64,12 +65,12 @@ describe('Controller: BrowseCtrl', function() {
     expect(profileService.getRandomProfile).toHaveBeenCalledWith('temp123');
     expect(scope.profile).toEqual(jasmine.any(Object));
     expect(steroids.view.navigationBar.update.mostRecentCall.args[0]).toEqual(jasmine.any(String));
-    expect(anchorScroll).toHaveBeenCalled();
+    expect(scrollToService.scrollToTop).toHaveBeenCalled();
 
     scope.next();
     expect(profileService.getRandomProfile.calls.length).toEqual(2);
     expect(steroids.view.navigationBar.update.calls.length).toEqual(3);
-    expect(anchorScroll.calls.length).toEqual(2);
+    expect(scrollToService.scrollToTop.calls.length).toEqual(2);
   });
 
   it('should redirect', function() {

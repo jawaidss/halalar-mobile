@@ -5,7 +5,7 @@
 /*global COUNTRIES:false */
 /*global DEFAULT_COUNTRY:false */
 
-angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$location', '$anchorScroll', 'userService', function($scope, $location, $anchorScroll, userService) {
+angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$timeout', 'userService', 'scrollToService', function($scope, $timeout, userService, scrollToService) {
   steroids.view.navigationBar.show('Sign up');
 
   var backButton = new steroids.buttons.NavigationBarButton();
@@ -45,8 +45,9 @@ angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$locat
     $scope.modal = false;
     steroids.view.navigationBar.show();
     steroids.statusBar.show();
-    $location.hash($scope.field).replace();
-    $anchorScroll();
+    $timeout(function() {
+      scrollToService.scrollToElement($scope.field);
+    });
   };
 
   $scope.submit = function() {

@@ -4,7 +4,7 @@
 /*global GENDERS:false */
 /*global COUNTRIES:false */
 
-angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$location', '$anchorScroll', 'userService', 'profileService', function($scope, $location, $anchorScroll, userService, profileService) {
+angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$timeout', 'userService', 'profileService', 'scrollToService', function($scope, $timeout, userService, profileService, scrollToService) {
   var user = userService.getUser();
   steroids.view.navigationBar.show(user.username);
   $scope.username = user.username;
@@ -57,8 +57,9 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$loca
     $scope.modal = false;
     steroids.view.navigationBar.show();
     steroids.statusBar.show();
-    $location.hash($scope.field).replace();
-    $anchorScroll();
+    $timeout(function() {
+      scrollToService.scrollToElement($scope.field);
+    });
   };
 
   $scope.submit = function() {

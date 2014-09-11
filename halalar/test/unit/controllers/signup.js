@@ -12,21 +12,20 @@ describe('Controller: SignupCtrl', function() {
 
   var SignupCtrl,
     scope,
-    location,
-    anchorScroll,
-    userService;
+    timeout,
+    userService,
+    scrollToService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, $location, _userService_) {
+  beforeEach(inject(function($controller, $rootScope, $timeout, _userService_, _scrollToService_) {
     scope = $rootScope.$new();
-    location = $location;
-    anchorScroll = jasmine.createSpy('$anchorScroll');
+    timeout = $timeout;
     userService = _userService_;
+    scrollToService = _scrollToService_;
 
-    spyOn(location, 'hash').andCallThrough();
-    spyOn(location, 'replace').andCallThrough();
     spyOn(history, 'back').andCallThrough();
     spyOn(userService, 'signUp').andCallThrough();
+    spyOn(scrollToService, 'scrollToElement').andReturn();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'hide').andCallThrough();
     spyOn(steroids.view.navigationBar, 'update').andCallThrough();
@@ -41,9 +40,9 @@ describe('Controller: SignupCtrl', function() {
 
     SignupCtrl = $controller('SignupCtrl', {
       $scope: scope,
-      $location: location,
-      $anchorScroll: anchorScroll,
-      userService: userService
+      $timeout: timeout,
+      userService: userService,
+      scrollToService: scrollToService
     });
   }));
 
@@ -118,8 +117,7 @@ describe('Controller: SignupCtrl', function() {
     expect(steroids.statusBar.show).toHaveBeenCalled();
     expect(steroids.view.navigationBar.show.calls.length).toEqual(2);
     expect(scope.religion).toEqual('Test');
-    expect(location.hash).toHaveBeenCalledWith(scope.field);
-    expect(location.replace).toHaveBeenCalled();
-    expect(anchorScroll).toHaveBeenCalled();
+    timeout.flush();
+    expect(scrollToService.scrollToElement).toHaveBeenCalledWith(scope.field);
   });
 });
