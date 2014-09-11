@@ -54,6 +54,7 @@ describe('Controller: ConversationCtrl', function() {
     expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({
       buttons: {
         left: [jasmine.any(Object)],
+        right: [jasmine.any(Object)],
         overrideBackButton: true
       }
     });
@@ -61,9 +62,17 @@ describe('Controller: ConversationCtrl', function() {
     var backButton = steroids.view.navigationBar.update.mostRecentCall.args[0].buttons.left[0];
     expect(backButton.title).toEqual('Back');
 
+    var profileButton = steroids.view.navigationBar.update.mostRecentCall.args[0].buttons.right[0];
+    expect(profileButton.title).toEqual('Profile');
+
     backButton.onTap();
-    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: []}});
+    expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({buttons: {left: [], right: []}});
     expect(history.back).toHaveBeenCalled();
+
+    profileButton.onTap();
+    expect(steroids.view.navigationBar.update.calls.length).toEqual(3);
+    expect(steroids.view.navigationBar.update.mostRecentCall.args).toEqual([{buttons: {left: [], right: []}}]);
+    expect(location.path).toHaveBeenCalledWith('/browse');
   });
 
   it('should attach the conversation to the scope', function() {
@@ -71,11 +80,6 @@ describe('Controller: ConversationCtrl', function() {
     expect(conversationService.getConversation).toHaveBeenCalledWith('temp123', 'monica100');
     expect(scope.conversation).toEqual(jasmine.any(Object));
     expect(scrollToService.scrollToBottom).toHaveBeenCalled();
-  });
-
-  it('should redirect', function() {
-    scope.redirect('/browse');
-    expect(location.path).toHaveBeenCalledWith('/browse');
   });
 
   it('should not send a message', function() {

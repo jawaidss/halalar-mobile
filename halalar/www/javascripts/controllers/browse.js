@@ -37,6 +37,7 @@ angular.module('halalarControllers').controller('BrowseCtrl', ['$scope', '$locat
     $scope.profile = profileService.getRandomProfile(user.token);
     steroids.view.navigationBar.update($scope.profile.username);
     scrollToService.scrollToTop();
+    // TODO
   };
 
   $scope.next();

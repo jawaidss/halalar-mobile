@@ -9,15 +9,31 @@ angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '
   backButton.onTap = function() {
     steroids.view.navigationBar.update({
       buttons: {
-        left: []
+        left: [],
+        right: []
       }
     });
     history.back();
   };
 
+  var profileButton = new steroids.buttons.NavigationBarButton();
+  profileButton.title = 'Profile';
+  profileButton.onTap = function() {
+    steroids.view.navigationBar.update({
+      buttons: {
+        left: [],
+        right: []
+      }
+    });
+    $scope.$apply(function() {
+      $location.path('/browse'); // TODO
+    });
+  };
+
   steroids.view.navigationBar.update({
     buttons: {
       left: [backButton],
+      right: [profileButton],
       overrideBackButton: true
     }
   });
@@ -25,10 +41,6 @@ angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '
   var user = userService.getUser();
   $scope.conversation = conversationService.getConversation(user.token, username);
   scrollToService.scrollToBottom();
-
-  $scope.redirect = function(path) {
-    $location.path(path);
-  };
 
   $scope.submit = function() {
     conversationService.sendMessage(
