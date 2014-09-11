@@ -13,6 +13,7 @@ module.exports = (config) ->
     # list of files / patterns to load in the browser
     files: [
       'www/components/steroids-js/steroids.js'
+      'www/components/jquery/dist/jquery.min.js'
       'www/components/angular/angular.min.js'
       'www/components/angular-mocks/angular-mocks.js'
       'www/components/angular-route/angular-route.min.js'

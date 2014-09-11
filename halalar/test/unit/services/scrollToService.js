@@ -1,6 +1,6 @@
 'use strict';
 
-/*global xit:false */
+/*global $:false */
 
 describe('Service: scrollToService', function() {
 
@@ -12,20 +12,32 @@ describe('Service: scrollToService', function() {
 
   beforeEach(inject(function(_scrollToService_) {
     scrollToService = _scrollToService_;
+
+    spyOn(scrollToService, 'scrollToAnimated').andCallThrough();
+    spyOn($.fn, 'animate').andReturn();
+    spyOn($.fn, 'height').andReturn(100);
+    spyOn($.fn, 'offset').andReturn({top: 50});
   }));
 
-  xit('should scroll to the top', function() {
+  it('should scroll with animation', function() {
+    scrollToService.scrollToAnimated(200);
+    expect($.fn.animate).toHaveBeenCalledWith({scrollTop: 200}, 'slow');
+  });
+
+  it('should scroll to the top', function() {
     scrollToService.scrollToTop();
-    // TODO
+    expect(scrollToService.scrollToAnimated).toHaveBeenCalledWith(0);
   });
 
-  xit('should scroll to the bottom', function() {
+  it('should scroll to the bottom', function() {
     scrollToService.scrollToBottom();
-    // TODO
+    expect(scrollToService.scrollToAnimated).toHaveBeenCalledWith(100);
+    expect($.fn.height).toHaveBeenCalled();
   });
 
-  xit('should scroll to the element', function() {
+  it('should scroll to the element', function() {
     scrollToService.scrollToElement('foo');
-    // TODO
+    expect(scrollToService.scrollToAnimated).toHaveBeenCalledWith(50);
+    expect($.fn.offset).toHaveBeenCalled();
   });
 });
