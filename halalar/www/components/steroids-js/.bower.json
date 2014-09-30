@@ -1,14 +1,14 @@
 {
   "name": "steroids-js",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "main": "./steroids.js",
   "dependencies": {},
   "homepage": "https://github.com/steroidsjs/steroids-js",
-  "_release": "3.5.3",
+  "_release": "3.5.4",
   "_resolution": {
     "type": "version",
-    "tag": "v3.5.3",
-    "commit": "dfec34dfae3e47f5511a7d40b58076aef381a5a8"
+    "tag": "v3.5.4",
+    "commit": "ee749a0f41c342539fab44790dca6311c698ea98"
   },
   "_source": "git://github.com/steroidsjs/steroids-js.git",
   "_target": "3.5.x",

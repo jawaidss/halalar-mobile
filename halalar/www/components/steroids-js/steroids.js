@@ -1,4 +1,4 @@
-/*! steroids-js - v3.5.3 - 2014-09-18 14:50 */
+/*! steroids-js - v3.5.3 - 2014-09-22 16:07 */
 (function(window){
 var Bridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -2303,8 +2303,8 @@ WebView = (function(_super) {
     }
     WebView.__super__.constructor.call(this, "webview", ["created", "preloaded", "unloaded"]);
     this.location = options.constructor.name === "String" ? options : options.location;
-    if (options.parameters != null) {
-      this.setParams(options.parameters);
+    if (options._parameters != null) {
+      this.setParams(options._parameters);
     }
     this.id = options.id != null ? options.id : void 0;
     if (this.location.indexOf("://") === -1) {
