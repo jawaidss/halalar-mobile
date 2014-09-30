@@ -77,7 +77,7 @@ steroids.config.loadingScreen.tintColor = "#262626"
 
 # ## iOS Status Bar
 steroids.config.statusBar.enabled = true
-steroids.config.statusBar.style = "default"
+steroids.config.statusBar.style = "light"
 
 # ## File Watcher
 # steroids.config.watch.exclude = ["www/my_excluded_file.js", "www/my_excluded_dir"]
