@@ -8,7 +8,7 @@
       Gender
     </div>
     <label class="item item-radio" ng-repeat="(key, value) in GENDERS">
-      <input type="radio" name="gender" value="{{ key }}" ng-model="gender">
+      <input type="radio" name="gender" value="{{ key }}" ng-model="$parent.gender">
       <div class="item-content">
         {{ value }}
       </div>
@@ -72,7 +72,8 @@
     </label>
   </div>
 
-  <button class="button button-block button-positive" ng-click="submit()">
+  <button class="button button-block button-positive" ng-click="submit()" ng-disabled="loading">
+    <i class="icon ion-loading-c" ng-show="loading"></i>
     Submit
   </button>
 </div>

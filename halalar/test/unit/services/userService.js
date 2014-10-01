@@ -30,7 +30,7 @@ describe('Service: userService', function() {
   it('should get the current user', function() {
     var user = userService.getUser();
     expect(localStorageService.get).toHaveBeenCalledWith('user');
-    expect(user).toEqual({username: 'samad', token: 'temp123'});
+    expect(user).toEqual(null);
   });
 
   it('should log in', function() {
@@ -71,7 +71,7 @@ describe('Service: userService', function() {
       username, email, password,
       successCallback, errorCallback
     );
-    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: 'samad', token: 'temp123'});
+    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: username, token: 'temp123'});
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 

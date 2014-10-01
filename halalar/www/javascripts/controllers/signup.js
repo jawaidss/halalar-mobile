@@ -51,6 +51,7 @@ angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$timeo
   };
 
   $scope.submit = function() {
+    $scope.loading = true;
     userService.signUp(
       $scope.age, $scope.gender, $scope.city, $scope.country,
       $scope.religion, $scope.family, $scope.self, $scope.community, $scope.career,
@@ -60,8 +61,9 @@ angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$timeo
           backButton.onTap();
         });
       },
-      function() {
-        navigator.notification.alert('Error!', function() {});
+      function(message) {
+        navigator.notification.alert(message, function() {});
+        $scope.loading = false;
       }
     );
   };

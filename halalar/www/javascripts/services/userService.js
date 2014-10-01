@@ -27,15 +27,31 @@ angular.module('halalarServices').service('userService', ['localStorageService',
                          religion, family, self, community, career,
                          username, email, password,
                          successCallback, errorCallback) {
-    if (username) { // TODO
-      localStorageService.set('user', {
-        username: 'samad',
-        token: 'temp123'
-      });
-      successCallback();
-    } else {
-      errorCallback();
-    }
+    apiService.post(
+      'sign-up',
+      {
+        age: age,
+        gender: gender,
+        city: city,
+        country: country,
+        religion: religion,
+        family: family,
+        self: self,
+        community: community,
+        career: career,
+        username: username,
+        email: email,
+        password: password
+      },
+      function(data) {
+        localStorageService.set('user', {
+          username: username,
+          token: data.token
+        });
+        successCallback();
+      },
+      errorCallback
+    );
   };
 
   this.logOut = function() {

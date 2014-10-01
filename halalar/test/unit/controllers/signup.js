@@ -24,7 +24,16 @@ describe('Controller: SignupCtrl', function() {
     scrollToService = _scrollToService_;
 
     spyOn(history, 'back').andCallThrough();
-    spyOn(userService, 'signUp').andCallThrough();
+    spyOn(userService, 'signUp').andCallFake(function(age, gender, city, country,
+                                                      religion, family, self, community, career,
+                                                      username, email, password,
+                                                      successCallback, errorCallback) {
+      if (username) {
+        successCallback();
+      } else {
+        errorCallback('Error!');
+      }
+    });
     spyOn(scrollToService, 'scrollToElement').andReturn();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'hide').andCallThrough();
