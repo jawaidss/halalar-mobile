@@ -22,6 +22,7 @@ angular.module('halalarControllers').controller('LoginCtrl', ['$scope', 'userSer
   });
 
   $scope.submit = function() {
+    $scope.loading = true;
     userService.logIn(
       $scope.username, $scope.password,
       function() {
@@ -29,8 +30,9 @@ angular.module('halalarControllers').controller('LoginCtrl', ['$scope', 'userSer
           backButton.onTap();
         });
       },
-      function() {
-        navigator.notification.alert('Error!', function() {});
+      function(message) {
+        navigator.notification.alert(message, function() {});
+        $scope.loading = false;
       }
     );
   };

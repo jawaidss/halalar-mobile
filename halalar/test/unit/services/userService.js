@@ -7,15 +7,24 @@ describe('Service: userService', function() {
 
   // instantiate service
   var userService,
-    localStorageService;
+    localStorageService,
+    apiService;
 
-  beforeEach(inject(function(_userService_, _localStorageService_) {
+  beforeEach(inject(function(_userService_, _localStorageService_, _apiService_) {
     userService = _userService_;
     localStorageService = _localStorageService_;
+    apiService = _apiService_;
 
     spyOn(localStorageService, 'get').andCallThrough();
     spyOn(localStorageService, 'set').andCallThrough();
     spyOn(localStorageService, 'remove').andCallThrough();
+    spyOn(apiService, 'post').andCallFake(function(url, data, successCallback, errorCallback) {
+      if (data.username) {
+        successCallback({username: data.username, token: 'temp123'});
+      } else {
+        errorCallback('Error!');
+      }
+    });
   }));
 
   it('should get the current user', function() {
@@ -30,7 +39,7 @@ describe('Service: userService', function() {
     var successCallback = jasmine.createSpy('successCallback');
     var errorCallback = jasmine.createSpy('errorCallback');
     userService.logIn(username, password, successCallback, errorCallback);
-    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: 'samad', token: 'temp123'});
+    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: username, token: 'temp123'});
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 

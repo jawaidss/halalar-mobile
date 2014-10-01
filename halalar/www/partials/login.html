@@ -9,6 +9,7 @@
   </label>
 </div>
 
-<button class="button button-block button-positive" ng-click="submit()">
+<button class="button button-block button-positive" ng-click="submit()" ng-disabled="loading">
+  <i class="icon ion-loading-c" ng-show="loading"></i>
   Submit
 </button>

@@ -15,7 +15,13 @@ describe('Controller: LoginCtrl', function() {
     userService = _userService_;
 
     spyOn(history, 'back').andCallThrough();
-    spyOn(userService, 'logIn').andCallThrough();
+    spyOn(userService, 'logIn').andCallFake(function(username, password, successCallback, errorCallback) {
+      if (username) {
+        successCallback();
+      } else {
+        errorCallback('Error!');
+      }
+    });
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'update').andCallThrough();
 
