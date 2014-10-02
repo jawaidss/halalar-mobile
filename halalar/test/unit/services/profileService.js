@@ -6,19 +6,42 @@ describe('Service: profileService', function() {
   beforeEach(module('halalarApp'));
 
   // instantiate service
-  var profileService;
+  var profileService,
+    apiService;
 
-  beforeEach(inject(function(_profileService_) {
+  beforeEach(inject(function(_profileService_, _apiService_) {
     profileService = _profileService_;
+    apiService = _apiService_;
+
+    var fake = function(url, data, successCallback, errorCallback) {
+      if (data.token) {
+        successCallback({});
+      } else {
+        errorCallback('Error!');
+      }
+    };
+
+    spyOn(apiService, 'get').andCallFake(fake);
+    spyOn(apiService, 'post').andCallFake(fake);
   }));
 
   it('should get the current profile', function() {
-    var profile = profileService.getProfile('temp123');
-    expect(profile).toEqual(jasmine.any(Object));
+    var token = 'token';
+    var successCallback = jasmine.createSpy('successCallback');
+    var errorCallback = jasmine.createSpy('errorCallback');
+    profileService.getProfile(token, successCallback, errorCallback);
+    expect(successCallback).toHaveBeenCalled();
+    expect(errorCallback).not.toHaveBeenCalled();
+
+    token = null;
+    profileService.getProfile(token, successCallback, errorCallback);
+    expect(successCallback.calls.length).toEqual(1);
+    expect(errorCallback).toHaveBeenCalled();
   });
 
   it('should edit the current profile', function() {
-    var age = 18;
+    var token = 'token';
+    var age = 'age';
     var city = 'city';
     var country = 'country';
     var religion = 'religion';
@@ -29,16 +52,16 @@ describe('Service: profileService', function() {
     var successCallback = jasmine.createSpy('successCallback');
     var errorCallback = jasmine.createSpy('errorCallback');
     profileService.editProfile(
-      'temp123', age, city, country,
+      token, age, city, country,
       religion, family, self, community, career,
       successCallback, errorCallback
     );
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 
-    age = 19;
+    token = null;
     profileService.editProfile(
-      'temp123', age, city, country,
+      token, age, city, country,
       religion, family, self, community, career,
       successCallback, errorCallback
     );

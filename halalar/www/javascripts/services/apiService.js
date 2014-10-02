@@ -5,14 +5,13 @@
 var API_URL = 'http://192.168.1.117:8000/api/'; // TODO
 
 angular.module('halalarServices').service('apiService', ['$http', function apiService($http) {
-  this.post = function(url, data, successCallback, errorCallback) {
+  this.http = function(method, url, params, data, successCallback, errorCallback, headers) {
     $http({
-        method: 'POST',
+        method: method,
         url: API_URL + url + '/',
-        data: $.param(data),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
+        params: params,
+        data: data,
+        headers: headers
     }).
     success(function(data, status, headers, config) {
       if (data.status === 'success') {
@@ -25,6 +24,16 @@ angular.module('halalarServices').service('apiService', ['$http', function apiSe
     }).
     error(function(data, status, headers, config) {
       errorCallback('Are you connected to the Internet?');
+    });
+  };
+
+  this.get = function(url, data, successCallback, errorCallback) {
+    this.http('GET', url, data, {}, successCallback, errorCallback, {});
+  };
+
+  this.post = function(url, data, successCallback, errorCallback) {
+    this.http('POST', url, {}, $.param(data), successCallback, errorCallback, {
+      'Content-Type': 'application/x-www-form-urlencoded'
     });
   };
 }]);

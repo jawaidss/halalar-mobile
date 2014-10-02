@@ -1,29 +1,36 @@
 'use strict';
 
-angular.module('halalarServices').service('profileService', [function profileService() {
-  this.getProfile = function(token) {
-    return { // TODO
-      age: 23,
-      gender: 'male',
-      city: 'Louisville',
-      country: 'US',
-      religion: 'Quinoa art party keffiyeh, brunch YOLO Kickstarter fashion axe paleo hashtag.',
-      family: 'Etsy viral master cleanse ethnic mumblecore, Brooklyn try-hard Echo Park 8-bit.',
-      self: ' Fingerstache fixie ethical yr. Bespoke pour-over roof party Schlitz swag jean shorts.',
-      community: 'Sriracha narwhal typewriter Etsy artisan. Tousled trust fund pork belly, umami seitan keytar cred.',
-      career: 'Freegan fixie cred, post-ironic 90\'s seitan sartorial narwhal Wes Anderson literally keytar jean shorts beard lomo scenester.',
-      email: 'samad@halalar.com'
-    };
+angular.module('halalarServices').service('profileService', ['apiService', function profileService(apiService) {
+  this.getProfile = function(token, successCallback, errorCallback) {
+    apiService.get(
+      'get-profile',
+      {
+        token: token,
+      },
+      successCallback,
+      errorCallback
+    );
   };
 
   this.editProfile = function(token, age, city, country,
                               religion, family, self, community, career,
                               successCallback, errorCallback) {
-    if (age === 18) { // TODO
-      successCallback();
-    } else {
-      errorCallback();
-    }
+    apiService.post(
+      'edit-profile',
+      {
+        token: token,
+        age: age,
+        city: city,
+        country: country,
+        religion: religion,
+        family: family,
+        self: self,
+        community: community,
+        career: career
+      },
+      successCallback,
+      errorCallback
+    );
   };
 
   this.getRandomProfile = function(token) {

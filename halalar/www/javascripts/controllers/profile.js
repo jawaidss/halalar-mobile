@@ -9,17 +9,27 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$time
   steroids.view.navigationBar.show(user.username);
   $scope.username = user.username;
 
-  var profile = profileService.getProfile(user.token);
-  $scope.age = profile.age;
-  $scope.gender = profile.gender;
-  $scope.city = profile.city;
-  $scope.country = profile.country;
-  $scope.religion = profile.religion;
-  $scope.family = profile.family;
-  $scope.self = profile.self;
-  $scope.community = profile.community;
-  $scope.career = profile.career;
-  $scope.email = profile.email;
+  profileService.getProfile(
+    user.token,
+    function(data) {
+      $scope.profile = data.profile;
+      $scope.age = data.profile.age;
+      $scope.gender = data.profile.gender;
+      $scope.city = data.profile.city;
+      $scope.country = data.profile.country;
+      $scope.religion = data.profile.religion;
+      $scope.family = data.profile.family;
+      $scope.self = data.profile.self;
+      $scope.community = data.profile.community;
+      $scope.career = data.profile.career;
+      $scope.email = data.profile.email;
+    },
+    function(message) {
+      navigator.notification.alert(message, function() {
+        backButton.onTap();
+      });
+    }
+  );
 
   var backButton = new steroids.buttons.NavigationBarButton();
   backButton.title = 'Back';
@@ -63,16 +73,18 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$time
   };
 
   $scope.submit = function() {
+    $scope.loading = true;
     profileService.editProfile(
       user.token, $scope.age, $scope.city, $scope.country,
       $scope.religion, $scope.family, $scope.self, $scope.community, $scope.career,
-      function() {
+      function(data) {
         navigator.notification.alert('Saved!', function() {
           backButton.onTap();
         });
       },
-      function() {
-        navigator.notification.alert('Error!', function() {});
+      function(message) {
+        navigator.notification.alert(message, function() {});
+        $scope.loading = false;
       }
     );
   };

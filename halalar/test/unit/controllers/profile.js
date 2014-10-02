@@ -25,9 +25,23 @@ describe('Controller: ProfileCtrl', function() {
     scrollToService = _scrollToService_;
 
     spyOn(history, 'back').andCallThrough();
-    spyOn(userService, 'getUser').andReturn({username: 'samad', token: 'temp123'});
-    spyOn(profileService, 'getProfile').andCallThrough();
-    spyOn(profileService, 'editProfile').andCallThrough();
+    spyOn(userService, 'getUser').andReturn({username: 'username', token: 'token'});
+    spyOn(profileService, 'getProfile').andCallFake(function(token, successCallback, errorCallback) {
+      if (token) {
+        successCallback({profile: {}});
+      } else {
+        errorCallback('Error!'); // TODO
+      }
+    });
+    spyOn(profileService, 'editProfile').andCallFake(function(token, age, city, country,
+                                                              religion, family, self, community, career,
+                                                              successCallback, errorCallback) {
+      if (age) {
+        successCallback({});
+      } else {
+        errorCallback('Error!');
+      }
+    });
     spyOn(scrollToService, 'scrollToElement').andReturn();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'hide').andCallThrough();
@@ -52,8 +66,8 @@ describe('Controller: ProfileCtrl', function() {
 
   it('should change the navigation bar title and buttons', function() {
     expect(userService.getUser).toHaveBeenCalled();
-    expect(profileService.getProfile).toHaveBeenCalledWith('temp123');
-    expect(steroids.view.navigationBar.show).toHaveBeenCalledWith('samad');
+    expect(profileService.getProfile).toHaveBeenCalledWith('token', jasmine.any(Function), jasmine.any(Function));
+    expect(steroids.view.navigationBar.show).toHaveBeenCalledWith('username');
     expect(steroids.view.navigationBar.update).toHaveBeenCalledWith({
       buttons: {
         left: [jasmine.any(Object)],
@@ -86,7 +100,7 @@ describe('Controller: ProfileCtrl', function() {
     scope.age = 18;
     scope.submit();
     expect(profileService.editProfile).toHaveBeenCalledWith(
-      'temp123', scope.age, scope.city, scope.country,
+      'token', scope.age, scope.city, scope.country,
       scope.religion, scope.family, scope.self, scope.community, scope.career,
       jasmine.any(Function), jasmine.any(Function)
     );
