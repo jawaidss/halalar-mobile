@@ -25,7 +25,7 @@ angular.module('halalarControllers').controller('LoginCtrl', ['$scope', 'userSer
     $scope.loading = true;
     userService.logIn(
       $scope.username, $scope.password,
-      function() {
+      function(data) {
         navigator.notification.alert('Logged in!', function() {
           backButton.onTap();
         });

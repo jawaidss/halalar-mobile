@@ -17,7 +17,7 @@ describe('Controller: LoginCtrl', function() {
     spyOn(history, 'back').andCallThrough();
     spyOn(userService, 'logIn').andCallFake(function(username, password, successCallback, errorCallback) {
       if (username) {
-        successCallback();
+        successCallback({});
       } else {
         errorCallback('Error!');
       }

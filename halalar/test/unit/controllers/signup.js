@@ -29,7 +29,7 @@ describe('Controller: SignupCtrl', function() {
                                                       username, email, password,
                                                       successCallback, errorCallback) {
       if (username) {
-        successCallback();
+        successCallback({});
       } else {
         errorCallback('Error!');
       }

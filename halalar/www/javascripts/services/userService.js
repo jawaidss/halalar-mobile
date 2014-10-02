@@ -17,7 +17,7 @@ angular.module('halalarServices').service('userService', ['localStorageService',
           username: username,
           token: data.token
         });
-        successCallback();
+        successCallback(data);
       },
       errorCallback
     );
@@ -48,7 +48,7 @@ angular.module('halalarServices').service('userService', ['localStorageService',
           username: username,
           token: data.token
         });
-        successCallback();
+        successCallback(data);
       },
       errorCallback
     );

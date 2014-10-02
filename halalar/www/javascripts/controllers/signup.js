@@ -56,7 +56,7 @@ angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$timeo
       $scope.age, $scope.gender, $scope.city, $scope.country,
       $scope.religion, $scope.family, $scope.self, $scope.community, $scope.career,
       $scope.username, $scope.email, $scope.password,
-      function() {
+      function(data) {
         navigator.notification.alert('Signed up!', function() {
           backButton.onTap();
         });
