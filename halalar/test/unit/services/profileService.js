@@ -70,7 +70,16 @@ describe('Service: profileService', function() {
   });
 
   it('should get a random profile', function() {
-    var profile = profileService.getRandomProfile('temp123');
-    expect(profile).toEqual(jasmine.any(Object));
+    var token = 'token';
+    var successCallback = jasmine.createSpy('successCallback');
+    var errorCallback = jasmine.createSpy('errorCallback');
+    profileService.getRandomProfile(token, successCallback, errorCallback);
+    expect(successCallback).toHaveBeenCalled();
+    expect(errorCallback).not.toHaveBeenCalled();
+
+    token = null;
+    profileService.getRandomProfile(token, successCallback, errorCallback);
+    expect(successCallback.calls.length).toEqual(1);
+    expect(errorCallback).toHaveBeenCalled();
   });
 });

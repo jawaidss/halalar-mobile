@@ -25,8 +25,14 @@ describe('Controller: BrowseCtrl', function() {
 
     spyOn(history, 'back').andCallThrough();
     spyOn(location, 'path').andCallThrough();
-    spyOn(userService, 'getUser').andReturn({username: 'samad', token: 'temp123'});
-    spyOn(profileService, 'getRandomProfile').andCallThrough();
+    spyOn(userService, 'getUser').andReturn({username: 'username', token: 'token'});
+    spyOn(profileService, 'getRandomProfile').andCallFake(function(token, successCallback, errorCallback) {
+      if (token) {
+        successCallback({profile: {username: ''}});
+      } else {
+        errorCallback('Error!'); // TODO
+      }
+    });
     spyOn(scrollToService, 'scrollToTop').andReturn();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'update').andCallThrough();
@@ -62,7 +68,7 @@ describe('Controller: BrowseCtrl', function() {
 
   it('should attach a profile to the scope and change the navigation bar title', function() {
     expect(userService.getUser).toHaveBeenCalled();
-    expect(profileService.getRandomProfile).toHaveBeenCalledWith('temp123');
+    expect(profileService.getRandomProfile).toHaveBeenCalledWith('token', jasmine.any(Function), jasmine.any(Function));
     expect(scope.profile).toEqual(jasmine.any(Object));
     expect(steroids.view.navigationBar.update.mostRecentCall.args[0]).toEqual(jasmine.any(String));
     expect(scrollToService.scrollToTop).toHaveBeenCalled();
