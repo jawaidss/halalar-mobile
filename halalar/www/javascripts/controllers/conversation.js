@@ -13,7 +13,7 @@ angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '
         right: []
       }
     });
-    history.back();
+    history.back(); // TODO
   };
 
   var profileButton = new steroids.buttons.NavigationBarButton();
