@@ -40,7 +40,6 @@ angular.module('halalarControllers').controller('BrowseCtrl', ['$scope', '$locat
       function(data) {
         $scope.profile = data.profile;
         steroids.view.navigationBar.update($scope.profile.username);
-        scrollToService.scrollToTop();
         $scope.loading = false;
       },
       function(message) {
@@ -49,6 +48,7 @@ angular.module('halalarControllers').controller('BrowseCtrl', ['$scope', '$locat
         });
       }
     );
+    scrollToService.scrollToTop();
   };
 
   $scope.next();
