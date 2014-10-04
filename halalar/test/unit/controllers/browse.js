@@ -80,7 +80,7 @@ describe('Controller: BrowseCtrl', function() {
   });
 
   it('should redirect', function() {
-    scope.redirect('/conversations/samad');
-    expect(location.path).toHaveBeenCalledWith('/conversations/samad');
+    scope.redirect('/conversations/username');
+    expect(location.path).toHaveBeenCalledWith('/conversations/username');
   });
 });

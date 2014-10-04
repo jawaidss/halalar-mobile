@@ -1,8 +1,8 @@
 <div class="list" ng-show="conversation">
   <div class="item item-text-wrap" ng-repeat="message in conversation">
     <span class="item-note">{{ message.timestamp }}</span>
-    <h2>{{ message.username }}</h2>
-    <p>{{ message.message }}</p>
+    <h2>{{ message.sender }}</h2>
+    <p>{{ message.body }}</p>
   </div>
 </div>
 
@@ -17,7 +17,8 @@
     <textarea ng-model="message" placeholder="Message&hellip;"></textarea>
   </label>
   <div class="item item-divider">
-    <button class="button button-block button-positive" ng-click="submit()">
+    <button class="button button-block button-positive" ng-click="submit()" ng-disabled="loading">
+      <i class="icon ion-loading-c" ng-show="loading"></i>
       Send
     </button>
   </div>

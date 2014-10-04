@@ -21,8 +21,20 @@ angular.module('halalarControllers').controller('ConversationsCtrl', ['$scope', 
     }
   });
 
-  var user = userService.getUser();
-  $scope.conversations = conversationService.getConversations(user.token);
+  $scope.loading = true;
+  $scope.user = userService.getUser();
+  conversationService.getConversations(
+    $scope.user.token,
+    function(data) {
+      $scope.conversations = data.messages;
+      $scope.loading = false;
+    },
+    function(message) {
+      navigator.notification.alert(message, function() {
+        backButton.onTap();
+      });
+    }
+  );
 
   $scope.redirect = function(path) {
     $location.path(path);

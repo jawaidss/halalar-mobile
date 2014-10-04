@@ -38,28 +38,37 @@ angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '
     }
   });
 
-  var user = userService.getUser();
-  $scope.conversation = conversationService.getConversation(user.token, username);
-  scrollToService.scrollToBottom();
+  $scope.user = userService.getUser();
+  conversationService.getConversation( // TODO
+    $scope.user.token, username,
+    function(data) {
+      $scope.conversation = data.messages;
+      scrollToService.scrollToBottom();
+    },
+    function(message) {
+      navigator.notification.alert(message, function() {
+        backButton.onTap();
+      });
+    }
+  );
 
   $scope.submit = function() {
+    $scope.loading = true;
     conversationService.sendMessage(
-      user.token, username, $scope.message,
-      function() {
+      $scope.user.token, username, $scope.message,
+      function(data) {
         navigator.notification.alert('Sent!', function() {
           $scope.$apply(function() {
-            $scope.conversation.push({
-              timestamp: 'Now',
-              username: user.username,
-              message: $scope.message
-            });
+            $scope.conversation.push(data.message);
             $scope.message = '';
             scrollToService.scrollToBottom();
+            $scope.loading = false;
           });
         });
       },
-      function() {
-        navigator.notification.alert('Error!', function() {});
+      function(message) {
+        navigator.notification.alert(message, function() {});
+        $scope.loading = false;
       }
     );
   };

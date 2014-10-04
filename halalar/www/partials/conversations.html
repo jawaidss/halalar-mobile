@@ -1,13 +1,23 @@
-<div class="list" ng-show="conversations">
-  <a class="item" ng-repeat="conversation in conversations" ng-click="redirect('/conversations/' + conversation.username)">
-    <span class="item-note">{{ conversation.timestamp }}</span>
-    <h2>{{ conversation.username }}</h2>
-    <p>{{ conversation.message }}</p>
-  </a>
+<div class="list" ng-show="loading">
+  <div class="item item-icon-left">
+    <i class="icon ion-loading-c"></i>
+    Loading&hellip;
+  </div>
 </div>
 
-<div class="list" ng-hide="conversations">
-  <div class="item item-text-wrap item-positive">
-    No conversations yet
+<div ng-hide="loading">
+  <div class="list" ng-show="conversations">
+    <a class="item" ng-class="{'item-icon-left': conversation.sender !== user.username}" ng-repeat="conversation in conversations" ng-click="redirect('/conversations/' + (conversation.sender === user.username ? conversation.recipient : conversation.sender))">
+      <i class="icon ion-flash" ng-show="conversation.sender !== user.username"></i>
+      <span class="item-note">{{ conversation.timestamp }}</span>
+      <h2>{{ conversation.sender === user.username ? conversation.recipient : conversation.sender }}</h2>
+      <p>{{ conversation.body }}</p>
+    </a>
+  </div>
+
+  <div class="list" ng-hide="conversations">
+    <div class="item item-text-wrap item-positive">
+      No conversations yet
+    </div>
   </div>
 </div>

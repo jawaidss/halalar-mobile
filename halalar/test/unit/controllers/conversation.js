@@ -26,9 +26,21 @@ describe('Controller: ConversationCtrl', function() {
 
     spyOn(history, 'back').andCallThrough();
     spyOn(location, 'path').andCallThrough();
-    spyOn(userService, 'getUser').andReturn({username: 'samad', token: 'temp123'});
-    spyOn(conversationService, 'getConversation').andCallThrough();
-    spyOn(conversationService, 'sendMessage').andCallThrough();
+    spyOn(userService, 'getUser').andReturn({username: 'username', token: 'token'});
+    spyOn(conversationService, 'getConversation').andCallFake(function(token, username, successCallback, errorCallback) {
+      if (token) {
+        successCallback({messages: []});
+      } else {
+        errorCallback('Error!'); // TODO
+      }
+    });
+    spyOn(conversationService, 'sendMessage').andCallFake(function(token, username, message, successCallback, errorCallback) {
+      if (message) {
+        successCallback({message: {}});
+      } else {
+        errorCallback('Error!');
+      }
+    });
     spyOn(scrollToService, 'scrollToBottom').andReturn();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'update').andCallThrough();
@@ -77,7 +89,7 @@ describe('Controller: ConversationCtrl', function() {
 
   it('should attach the conversation to the scope', function() {
     expect(userService.getUser).toHaveBeenCalled();
-    expect(conversationService.getConversation).toHaveBeenCalledWith('temp123', 'monica100');
+    expect(conversationService.getConversation).toHaveBeenCalledWith('token', 'monica100', jasmine.any(Function), jasmine.any(Function));
     expect(scope.conversation).toEqual(jasmine.any(Object));
     expect(scrollToService.scrollToBottom).toHaveBeenCalled();
   });
@@ -87,7 +99,7 @@ describe('Controller: ConversationCtrl', function() {
     var message = scope.message;
     scope.submit();
     expect(conversationService.sendMessage).toHaveBeenCalledWith(
-      'temp123', 'monica100', message,
+      'token', 'monica100', message,
       jasmine.any(Function), jasmine.any(Function)
     );
     expect(navigator.notification.alert).toHaveBeenCalledWith('Error!', jasmine.any(Function));
@@ -98,15 +110,11 @@ describe('Controller: ConversationCtrl', function() {
 
   it('should send a message', function() {
     var conversation = scope.conversation;
-    conversation.push({
-      timestamp: 'Now',
-      username: 'samad',
-      message: 'test'
-    });
+    conversation.push({});
     scope.message = 'test';
     scope.submit();
     expect(conversationService.sendMessage).toHaveBeenCalledWith(
-      'temp123', 'monica100', 'test',
+      'token', 'monica100', 'test',
       jasmine.any(Function), jasmine.any(Function)
     );
     expect(navigator.notification.alert).toHaveBeenCalledWith('Sent!', jasmine.any(Function));

@@ -6,37 +6,66 @@ describe('Service: conversationService', function() {
   beforeEach(module('halalarApp'));
 
   // instantiate service
-  var conversationService;
+  var conversationService,
+    apiService;
 
-  beforeEach(inject(function(_conversationService_) {
+  beforeEach(inject(function(_conversationService_, _apiService_) {
     conversationService = _conversationService_;
+    apiService = _apiService_;
+
+    var fake = function(url, data, successCallback, errorCallback) {
+      if (data.token) {
+        successCallback({});
+      } else {
+        errorCallback('Error!');
+      }
+    };
+
+    spyOn(apiService, 'get').andCallFake(fake);
+    spyOn(apiService, 'post').andCallFake(fake);
   }));
 
   it('should get all conversations', function() {
-    var conversations = conversationService.getConversations('temp123');
-    expect(conversations).toEqual(jasmine.any(Object));
-  });
-
-  it('should get the conversation', function() {
-    var conversation = conversationService.getConversation('temp123', 'samad');
-    expect(conversation).toEqual(jasmine.any(Object));
-  });
-
-  it('should send a message', function() {
+    var token = 'token';
     var successCallback = jasmine.createSpy('successCallback');
     var errorCallback = jasmine.createSpy('errorCallback');
-
-    conversationService.sendMessage(
-      'temp123', 'samad', 'message',
-      successCallback, errorCallback
-    );
+    conversationService.getConversations(token, successCallback, errorCallback);
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 
-    conversationService.sendMessage(
-      'temp123', 'samad', '',
-      successCallback, errorCallback
-    );
+    token = null;
+    conversationService.getConversations(token, successCallback, errorCallback);
+    expect(successCallback.calls.length).toEqual(1);
+    expect(errorCallback).toHaveBeenCalled();
+  });
+
+  it('should get the conversation', function() {
+    var token = 'token';
+    var username = 'username';
+    var successCallback = jasmine.createSpy('successCallback');
+    var errorCallback = jasmine.createSpy('errorCallback');
+    conversationService.getConversation(token, username, successCallback, errorCallback);
+    expect(successCallback).toHaveBeenCalled();
+    expect(errorCallback).not.toHaveBeenCalled();
+
+    token = null;
+    conversationService.getConversation(token, username, successCallback, errorCallback);
+    expect(successCallback.calls.length).toEqual(1);
+    expect(errorCallback).toHaveBeenCalled();
+  });
+
+  it('should send a message', function() {
+    var token = 'token';
+    var username = 'username';
+    var message = 'message';
+    var successCallback = jasmine.createSpy('successCallback');
+    var errorCallback = jasmine.createSpy('errorCallback');
+    conversationService.sendMessage(token, username, message, successCallback, errorCallback);
+    expect(successCallback).toHaveBeenCalled();
+    expect(errorCallback).not.toHaveBeenCalled();
+
+    token = null;
+    conversationService.sendMessage(token, username, message, successCallback, errorCallback);
     expect(successCallback.calls.length).toEqual(1);
     expect(errorCallback).toHaveBeenCalled();
   });

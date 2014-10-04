@@ -20,8 +20,14 @@ describe('Controller: ConversationsCtrl', function() {
 
     spyOn(history, 'back').andCallThrough();
     spyOn(location, 'path').andCallThrough();
-    spyOn(userService, 'getUser').andReturn({username: 'samad', token: 'temp123'});
-    spyOn(conversationService, 'getConversations').andCallThrough();
+    spyOn(userService, 'getUser').andReturn({username: 'username', token: 'token'});
+    spyOn(conversationService, 'getConversations').andCallFake(function(token, successCallback, errorCallback) {
+      if (token) {
+        successCallback({messages: []});
+      } else {
+        errorCallback('Error!'); // TODO
+      }
+    });
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
     spyOn(steroids.view.navigationBar, 'update').andCallThrough();
 
@@ -52,12 +58,12 @@ describe('Controller: ConversationsCtrl', function() {
 
   it('should attach all conversations to the scope', function() {
     expect(userService.getUser).toHaveBeenCalled();
-    expect(conversationService.getConversations).toHaveBeenCalledWith('temp123');
+    expect(conversationService.getConversations).toHaveBeenCalledWith('token', jasmine.any(Function), jasmine.any(Function));
     expect(scope.conversations).toEqual(jasmine.any(Object));
   });
 
   it('should redirect', function() {
-    scope.redirect('/conversations/samad');
-    expect(location.path).toHaveBeenCalledWith('/conversations/samad');
+    scope.redirect('/conversations/username');
+    expect(location.path).toHaveBeenCalledWith('/conversations/username');
   });
 });

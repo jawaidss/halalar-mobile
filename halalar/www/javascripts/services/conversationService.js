@@ -1,52 +1,38 @@
 'use strict';
 
-angular.module('halalarServices').service('conversationService', [function conversationService() {
-  this.getConversations = function(token) {
-    return [ // TODO
+angular.module('halalarServices').service('conversationService', ['apiService', function conversationService(apiService) {
+  this.getConversations = function(token, successCallback, errorCallback) {
+    apiService.get(
+      'get-conversations',
       {
-        username: 'monica100',
-        timestamp: '7:44 PM',
-        message: 'Irish skinny, grinder affogato, dark, sweet carajillo, flavour seasonal aroma single origin cream. Percolator, foam, arabica, decaffeinated bar brewed aromatic.'
+        token: token,
       },
-      {
-        username: 'all_that_jelly',
-        timestamp: 'Yesterday',
-        message: 'Jelly-o sesame snaps halvah croissant oat cake cookie. Cheesecake bear claw topping. Chupa chups apple pie carrot cake chocolate cake caramels.'
-      },
-      {
-        username: 'no_toast',
-        timestamp: '8/30/14',
-        message: 'Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar.'
-      }
-    ];
+      successCallback,
+      errorCallback
+    );
   };
 
-  this.getConversation = function(token, username) {
-    return [ // TODO
+  this.getConversation = function(token, username, successCallback, errorCallback) {
+    apiService.get(
+      'get-conversation/' + username,
       {
-        username: 'monica100',
-        timestamp: '8/30/14',
-        message: 'Salaam'
+        token: token,
       },
-      {
-        username: 'samad',
-        timestamp: 'Yesterday',
-        message: 'Wasalaam'
-      },
-      {
-        username: 'monica100',
-        timestamp: '7:44 PM',
-        message: 'What\'s up?'
-      }
-    ];
+      successCallback,
+      errorCallback
+    );
   };
 
   this.sendMessage = function(token, username, message,
                               successCallback, errorCallback) {
-    if (message) { // TODO
-      successCallback();
-    } else {
-      errorCallback();
-    }
+    apiService.post(
+      'send-message/' + username,
+      {
+        token: token,
+        body: message
+      },
+      successCallback,
+      errorCallback
+    );
   };
 }]);

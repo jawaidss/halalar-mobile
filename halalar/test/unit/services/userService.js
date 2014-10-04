@@ -20,7 +20,7 @@ describe('Service: userService', function() {
     spyOn(localStorageService, 'remove').andCallThrough();
     spyOn(apiService, 'post').andCallFake(function(url, data, successCallback, errorCallback) {
       if (data.username) {
-        successCallback({username: data.username, token: 'temp123'});
+        successCallback({username: data.username, token: 'token'});
       } else {
         errorCallback('Error!');
       }
@@ -39,7 +39,7 @@ describe('Service: userService', function() {
     var successCallback = jasmine.createSpy('successCallback');
     var errorCallback = jasmine.createSpy('errorCallback');
     userService.logIn(username, password, successCallback, errorCallback);
-    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: username, token: 'temp123'});
+    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: username, token: 'token'});
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 
@@ -71,7 +71,7 @@ describe('Service: userService', function() {
       username, email, password,
       successCallback, errorCallback
     );
-    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: username, token: 'temp123'});
+    expect(localStorageService.set).toHaveBeenCalledWith('user', {username: username, token: 'token'});
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 
