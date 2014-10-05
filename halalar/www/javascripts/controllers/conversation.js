@@ -38,12 +38,14 @@ angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '
     }
   });
 
+  $scope.conversationLoading = true;
   $scope.user = userService.getUser();
-  conversationService.getConversation( // TODO
+  conversationService.getConversation(
     $scope.user.token, username,
     function(data) {
       $scope.conversation = data.messages;
       scrollToService.scrollToBottom();
+      $scope.conversationLoading = false;
     },
     function(message) {
       navigator.notification.alert(message, function() {

@@ -34,21 +34,23 @@ angular.module('halalarControllers').controller('BrowseCtrl', ['$scope', '$locat
   };
 
   $scope.next = function() {
-    $scope.loading = true;
-    profileService.getRandomProfile(
-      user.token,
-      function(data) {
-        $scope.profile = data.profile;
-        steroids.view.navigationBar.update($scope.profile.username);
-        $scope.loading = false;
-      },
-      function(message) {
-        navigator.notification.alert(message, function() {
-          backButton.onTap();
-        });
-      }
-    );
-    scrollToService.scrollToTop();
+    if (!$scope.loading) {
+      $scope.loading = true;
+      profileService.getRandomProfile(
+        user.token,
+        function(data) {
+          $scope.profile = data.profile;
+          steroids.view.navigationBar.update($scope.profile.username);
+          $scope.loading = false;
+        },
+        function(message) {
+          navigator.notification.alert(message, function() {
+            backButton.onTap();
+          });
+        }
+      );
+      scrollToService.scrollToTop();
+    }
   };
 
   $scope.next();

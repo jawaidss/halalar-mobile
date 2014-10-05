@@ -1,25 +1,34 @@
-<div class="list" ng-show="conversation">
-  <div class="item item-text-wrap" ng-repeat="message in conversation">
-    <span class="item-note">{{ message.timestamp }}</span>
-    <h2>{{ message.sender }}</h2>
-    <p>{{ message.body }}</p>
+<div class="list" ng-show="conversationLoading">
+  <div class="item item-icon-left">
+    <i class="icon ion-loading-c"></i>
+    Loading&hellip;
   </div>
 </div>
 
-<div class="list" ng-hide="conversation">
-  <div class="item item-text-wrap item-positive">
-    No messages yet
+<div ng-hide="conversationLoading">
+  <div class="list" ng-show="conversation">
+    <div class="item item-text-wrap" ng-repeat="message in conversation">
+      <span class="item-note">{{ message.timestamp }}</span>
+      <h2>{{ message.sender }}</h2>
+      <p>{{ message.body }}</p>
+    </div>
   </div>
-</div>
 
-<div class="list">
-  <label class="item item-input">
-    <textarea ng-model="message" placeholder="Message&hellip;"></textarea>
-  </label>
-  <div class="item item-divider">
-    <button class="button button-block button-positive" ng-click="submit()" ng-disabled="loading">
-      <i class="icon ion-loading-c" ng-show="loading"></i>
-      Send
-    </button>
+  <div class="list" ng-hide="conversation">
+    <div class="item item-text-wrap item-positive">
+      No messages yet
+    </div>
+  </div>
+
+  <div class="list">
+    <label class="item item-input">
+      <textarea ng-model="message" placeholder="Message&hellip;"></textarea>
+    </label>
+    <div class="item item-divider">
+      <button class="button button-block button-positive" ng-click="submit()" ng-disabled="loading">
+        <i class="icon ion-loading-c" ng-show="loading"></i>
+        Send
+      </button>
+    </div>
   </div>
 </div>
