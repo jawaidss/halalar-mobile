@@ -12,7 +12,7 @@ angular.module('halalarServices').service('scrollToService', [function scrollToS
   };
   
   this.scrollToBottom = function() {
-    this.scrollToAnimated($('body').height());
+    this.scrollToAnimated($(document).height());
   };
   
   this.scrollToElement = function(id) {

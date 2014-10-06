@@ -9,15 +9,17 @@ describe('Controller: ConversationCtrl', function() {
     scope,
     routeParams,
     location,
+    timeout,
     userService,
     conversationService,
     scrollToService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, $routeParams, $location, _userService_, _conversationService_, _scrollToService_) {
+  beforeEach(inject(function($controller, $rootScope, $routeParams, $location, $timeout, _userService_, _conversationService_, _scrollToService_) {
     scope = $rootScope.$new();
     routeParams = $routeParams;
     location = $location;
+    timeout = $timeout;
     userService = _userService_;
     conversationService = _conversationService_;
     scrollToService = _scrollToService_;
@@ -88,6 +90,7 @@ describe('Controller: ConversationCtrl', function() {
   });
 
   it('should attach the conversation to the scope', function() {
+    timeout.flush();
     expect(userService.getUser).toHaveBeenCalled();
     expect(conversationService.getConversation).toHaveBeenCalledWith('token', 'monica100', jasmine.any(Function), jasmine.any(Function));
     expect(scope.conversation).toEqual(jasmine.any(Object));
@@ -95,6 +98,7 @@ describe('Controller: ConversationCtrl', function() {
   });
 
   it('should not send a message', function() {
+    timeout.flush();
     var conversation = scope.conversation;
     var message = scope.message;
     scope.submit();
@@ -109,6 +113,7 @@ describe('Controller: ConversationCtrl', function() {
   });
 
   it('should send a message', function() {
+    timeout.flush();
     var conversation = scope.conversation;
     conversation.push({});
     scope.message = 'test';

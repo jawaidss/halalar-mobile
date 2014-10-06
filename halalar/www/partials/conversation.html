@@ -6,7 +6,7 @@
 </div>
 
 <div ng-hide="conversationLoading">
-  <div class="list" ng-show="conversation">
+  <div class="list" ng-show="conversation.length">
     <div class="item item-text-wrap" ng-repeat="message in conversation">
       <span class="item-note">{{ message.timestamp }}</span>
       <h2>{{ message.sender }}</h2>
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class="list" ng-hide="conversation">
+  <div class="list" ng-hide="conversation.length">
     <div class="item item-text-wrap item-positive">
       No messages yet
     </div>

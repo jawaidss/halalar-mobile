@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '$routeParams', '$location', 'userService', 'conversationService', 'scrollToService', function($scope, $routeParams, $location, userService, conversationService, scrollToService) {
+angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '$routeParams', '$location', '$timeout', 'userService', 'conversationService', 'scrollToService', function($scope, $routeParams, $location, $timeout, userService, conversationService, scrollToService) {
   var username = $routeParams.username;
   steroids.view.navigationBar.show(username);
 
@@ -44,7 +44,9 @@ angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '
     $scope.user.token, username,
     function(data) {
       $scope.conversation = data.messages;
-      scrollToService.scrollToBottom();
+      $timeout(function() {
+        scrollToService.scrollToBottom();
+      }, 100);
       $scope.conversationLoading = false;
     },
     function(message) {
@@ -63,7 +65,9 @@ angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '
           $scope.$apply(function() {
             $scope.conversation.push(data.message);
             $scope.message = '';
-            scrollToService.scrollToBottom();
+            $timeout(function() {
+              scrollToService.scrollToBottom();
+            }, 100);
             $scope.loading = false;
           });
         });
