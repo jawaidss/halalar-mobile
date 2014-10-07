@@ -7,3 +7,9 @@ body {
 textarea { /* TODO */
   height: 15em;
 }
+
+.version {
+  color: #777777;
+  font-size: smaller;
+  text-align: center;
+}

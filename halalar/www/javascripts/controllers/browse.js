@@ -33,8 +33,12 @@ angular.module('halalarControllers').controller('BrowseCtrl', ['$scope', '$locat
     $location.path(path);
   };
 
-  $scope.next = function() {
+  $scope.next = function(removeCache) {
     if (!$scope.loading) {
+      if (removeCache) {
+        profileService.removeCache();
+      }
+
       $scope.loading = true;
       profileService.getRandomProfile(
         user.token,
@@ -53,5 +57,5 @@ angular.module('halalarControllers').controller('BrowseCtrl', ['$scope', '$locat
     }
   };
 
-  $scope.next();
+  $scope.next(false);
 }]);

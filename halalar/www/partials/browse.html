@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<div hm-swipe="next()" ng-show="profile">
+<div hm-swipe="next(true)" ng-show="profile">
   <div class="list">
     <div class="item item-text-wrap">
       <strong>Age</strong> {{ profile.age }}<br>
@@ -65,7 +65,7 @@
   </div>
 
   <div class="button-bar">
-    <button class="button button-stable" ng-click="next()" ng-disabled="loading">Next</button>
+    <button class="button button-stable" ng-click="next(true)" ng-disabled="loading">Next</button>
     <button class="button button-positive" ng-click="redirect('/conversations/' + profile.username)">Halalar</button>
   </div>
 </div>

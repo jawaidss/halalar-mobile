@@ -1,6 +1,18 @@
 'use strict';
 
-angular.module('halalarServices').service('profileService', ['apiService', function profileService(apiService) {
+angular.module('halalarServices').service('profileService', ['localStorageService', 'apiService', function profileService(localStorageService, apiService) {
+  this.getCache = function() {
+    return localStorageService.get('cache');
+  };
+
+  this.setCache = function(username) {
+    localStorageService.set('cache', username);
+  };
+
+  this.removeCache = function() {
+    localStorageService.remove('cache');
+  };
+
   this.getProfile = function(token, successCallback, errorCallback) {
     apiService.get(
       'get-profile',
@@ -34,8 +46,15 @@ angular.module('halalarServices').service('profileService', ['apiService', funct
   };
 
   this.getRandomProfile = function(token, successCallback, errorCallback) {
+    var url = 'get-profile/random';
+    var username = this.getCache();
+
+    if (username) {
+      url += '/' + username;
+    }
+
     apiService.get(
-      'get-profile/random',
+      url,
       {
         token: token,
       },

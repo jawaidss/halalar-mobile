@@ -1,5 +1,7 @@
 'use strict';
 
+/*global VERSION:false */
+
 describe('Controller: MainCtrl', function() {
 
   // load the controller's module
@@ -8,17 +10,20 @@ describe('Controller: MainCtrl', function() {
   var MainCtrl,
     scope,
     location,
-    userService;
+    userService,
+    profileService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, $location, _userService_) {
+  beforeEach(inject(function($controller, $rootScope, $location, _userService_, _profileService_) {
     scope = $rootScope.$new();
     location = $location;
     userService = _userService_;
+    profileService = _profileService_;
 
     spyOn(location, 'path').andCallThrough();
     spyOn(userService, 'getUser').andCallThrough();
     spyOn(userService, 'logOut').andCallThrough();
+    spyOn(profileService, 'removeCache').andCallThrough();
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
 
     MainCtrl = $controller('MainCtrl', {
@@ -30,6 +35,10 @@ describe('Controller: MainCtrl', function() {
 
   it('should change the navigation bar title', function() {
     expect(steroids.view.navigationBar.show).toHaveBeenCalledWith('Halalar');
+  });
+
+  it('should remove the cache', function() {
+    expect(profileService.removeCache).toHaveBeenCalled();
   });
 
   it('should attach a user to the scope', function() {
@@ -66,5 +75,9 @@ describe('Controller: MainCtrl', function() {
     expect(navigator.notification.confirm).toHaveBeenCalledWith('Log out?', jasmine.any(Function));
     expect(userService.logOut).toHaveBeenCalled();
     expect(scope.user).toBeNull();
+  });
+
+  it('should attach the version to the scope', function() {
+    expect(scope.VERSION).toEqual(VERSION);
   });
 });

@@ -1,7 +1,11 @@
 'use strict';
 
-angular.module('halalarControllers').controller('MainCtrl', ['$scope', '$location', 'userService', function($scope, $location, userService) {
+/*global VERSION:false */
+
+angular.module('halalarControllers').controller('MainCtrl', ['$scope', '$location', 'userService', 'profileService', function($scope, $location, userService, profileService) {
   steroids.view.navigationBar.show('Halalar');
+
+  profileService.removeCache();
 
   $scope.user = userService.getUser();
 
@@ -19,4 +23,6 @@ angular.module('halalarControllers').controller('MainCtrl', ['$scope', '$locatio
       }
     });
   };
+
+  $scope.VERSION = VERSION;
 }]);

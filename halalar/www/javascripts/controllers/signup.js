@@ -44,7 +44,7 @@ angular.module('halalarControllers').controller('SignupCtrl', ['$scope', '$timeo
     $scope[$scope.field] = $scope.temporaryField;
     $scope.modal = false;
     steroids.view.navigationBar.show();
-    steroids.statusBar.show();
+    steroids.statusBar.show({style: 'light'});
     $timeout(function() {
       scrollToService.scrollToElement($scope.field);
     });

@@ -11,16 +11,18 @@ describe('Controller: ConversationCtrl', function() {
     location,
     timeout,
     userService,
+    profileService,
     conversationService,
     scrollToService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, $routeParams, $location, $timeout, _userService_, _conversationService_, _scrollToService_) {
+  beforeEach(inject(function($controller, $rootScope, $routeParams, $location, $timeout, _userService_, _profileService_, _conversationService_, _scrollToService_) {
     scope = $rootScope.$new();
     routeParams = $routeParams;
     location = $location;
     timeout = $timeout;
     userService = _userService_;
+    profileService = _profileService_;
     conversationService = _conversationService_;
     scrollToService = _scrollToService_;
 
@@ -29,6 +31,7 @@ describe('Controller: ConversationCtrl', function() {
     spyOn(history, 'back').andCallThrough();
     spyOn(location, 'path').andCallThrough();
     spyOn(userService, 'getUser').andReturn({username: 'username', token: 'token'});
+    spyOn(profileService, 'setCache').andCallThrough();
     spyOn(conversationService, 'getConversation').andCallFake(function(token, username, successCallback, errorCallback) {
       if (token) {
         successCallback({messages: []});
@@ -87,6 +90,10 @@ describe('Controller: ConversationCtrl', function() {
     expect(steroids.view.navigationBar.update.calls.length).toEqual(3);
     expect(steroids.view.navigationBar.update.mostRecentCall.args).toEqual([{buttons: {left: [], right: []}}]);
     expect(location.path).toHaveBeenCalledWith('/browse');
+  });
+
+  it('should set the cache', function() {
+    expect(profileService.setCache).toHaveBeenCalledWith('monica100');
   });
 
   it('should attach the conversation to the scope', function() {

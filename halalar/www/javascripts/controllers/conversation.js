@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '$routeParams', '$location', '$timeout', 'userService', 'conversationService', 'scrollToService', function($scope, $routeParams, $location, $timeout, userService, conversationService, scrollToService) {
+angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '$routeParams', '$location', '$timeout', 'userService', 'profileService', 'conversationService', 'scrollToService', function($scope, $routeParams, $location, $timeout, userService, profileService, conversationService, scrollToService) {
   var username = $routeParams.username;
   steroids.view.navigationBar.show(username);
+  profileService.setCache(username);
 
   var backButton = new steroids.buttons.NavigationBarButton();
   backButton.title = 'Back';
@@ -13,7 +14,7 @@ angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '
         right: []
       }
     });
-    history.back(); // TODO
+    history.back();
   };
 
   var profileButton = new steroids.buttons.NavigationBarButton();
@@ -26,7 +27,7 @@ angular.module('halalarControllers').controller('ConversationCtrl', ['$scope', '
       }
     });
     $scope.$apply(function() {
-      $location.path('/browse'); // TODO
+      $location.path('/browse');
     });
   };
 

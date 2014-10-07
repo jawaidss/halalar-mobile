@@ -121,7 +121,7 @@ describe('Controller: ProfileCtrl', function() {
 
     scope.temporaryField = 'Test';
     scope.hideModal();
-    expect(steroids.statusBar.show).toHaveBeenCalled();
+    expect(steroids.statusBar.show).toHaveBeenCalledWith({style: 'light'});
     expect(steroids.view.navigationBar.show.calls.length).toEqual(2);
     expect(scope.religion).toEqual('Test');
     timeout.flush();

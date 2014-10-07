@@ -16,6 +16,7 @@ git clone git@github.com:jawaidss/halalar-mobile.git
 ```bash
 cd /path/to/halalar-mobile/halalar
 steroids connect --no-qrcode
+s
 ```
 
 ## Testing
@@ -27,5 +28,6 @@ steroids test karma --simulator
 ## Deploying
 
 ```bash
+TODO
 steroids deploy
 ```
