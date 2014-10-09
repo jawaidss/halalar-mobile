@@ -27,7 +27,19 @@ steroids test karma --simulator
 
 ## Deploying
 
+* `/path/to/halalar-mobile/halalar/www/javascripts/application.js`
+ * Update `VERSION`.
+* `/path/to/halalar-mobile/halalar/www/config.xml`, `/path/to/halalar-mobile/halalar/www/config.android.xml`, `/path/to/halalar-mobile/halalar/www/config.ios.xml`
+ * Update `version`.
+
 ```bash
-TODO
+git commit -m "Release version 1.0.0" -a
+git push
+git tag 1.0.0
+git push --tags
 steroids deploy
 ```
+
+* [Appgyver Cloud Services](https://build.appgyver.com/applications)
+* [iTunes Connect](https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wo/34.0)
+* [Google Play Developer Console](https://play.google.com/apps/publish)
