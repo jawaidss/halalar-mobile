@@ -1,5 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.appgyver.helloSteroids" version="3.1.8" xmlns="http://www.w3.org/ns/widgets">
+<widget id="com.hurriyah.halalar" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
+    <name>Halalar</name>
+    <description>
+        A mobile app for halal hollering.
+    </description>
+    <author email="salaam@halalar.com" href="https://halalar.com">
+        Halalar Team
+    </author>
     <!--
       The following preferences are explained in more detail in the config.ios.xml guide:
         http://guides.appgyver.com/steroids/guides/project_configuration/config-xml-ios/

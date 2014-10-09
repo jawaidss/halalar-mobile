@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?><!-- TODO -->
-<widget id="com.appgyver.helloSteroids" version="3.1.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Hello Steroids</name>
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.hurriyah.halalar" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Halalar</name>
     <description>
-        A fresh new Steroids application.
+        A mobile app for halal hollering.
     </description>
-    <author email="contact@appgyver.com" href="http://www.appgyver.com/steroids">
-        AppGyver Steroids Team
+    <author email="salaam@halalar.com" href="https://halalar.com">
+        Halalar Team
     </author>
     <access origin="*" />
 

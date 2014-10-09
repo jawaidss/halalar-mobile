@@ -2,7 +2,7 @@
 
 /*global $:false */
 
-var API_URL = 'http://192.168.1.117:8000/api/'; // TODO
+var API_URL = 'https://halalar.com/api/';
 
 angular.module('halalarServices').service('apiService', ['$http', function apiService($http) {
   this.http = function(method, url, params, data, successCallback, errorCallback, headers) {
