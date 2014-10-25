@@ -20,7 +20,7 @@
       Religion
     </div>
     <div class="item item-text-wrap">
-      {{ profile.religion }}
+      <p ng-repeat="paragraph in profile.religion.split('\n') track by $index">{{paragraph}}</p>
     </div>
   </div>
 
@@ -30,7 +30,7 @@
       Family
     </div>
     <div class="item item-text-wrap">
-      {{ profile.family }}
+      <p ng-repeat="paragraph in profile.family.split('\n') track by $index">{{paragraph}}</p>
     </div>
   </div>
 
@@ -40,7 +40,7 @@
       Self
     </div>
     <div class="item item-text-wrap">
-      {{ profile.self }}
+      <p ng-repeat="paragraph in profile.self.split('\n') track by $index">{{paragraph}}</p>
     </div>
   </div>
 
@@ -50,7 +50,7 @@
       Community
     </div>
     <div class="item item-text-wrap">
-      {{ profile.community }}
+      <p ng-repeat="paragraph in profile.community.split('\n') track by $index">{{paragraph}}</p>
     </div>
   </div>
 
@@ -60,7 +60,7 @@
       Career
     </div>
     <div class="item item-text-wrap">
-      {{ profile.career }}
+      <p ng-repeat="paragraph in profile.career.split('\n') track by $index">{{paragraph}}</p>
     </div>
   </div>
 

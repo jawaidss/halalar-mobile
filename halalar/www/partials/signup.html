@@ -83,7 +83,7 @@
     {{ fieldTitle }}
   </div>
   <div class="item item-text-wrap">
-    {{ fieldHelpText }}
+    <p ng-repeat="paragraph in fieldHelpText.split('\n')">{{paragraph}}</p>
   </div>
   <label class="item item-input">
     <textarea ng-model="temporaryField" placeholder="{{ fieldTitle }}&hellip;"></textarea>

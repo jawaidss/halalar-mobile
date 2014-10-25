@@ -18,12 +18,12 @@ angular.module('halalarApp', [
   $routeProvider.otherwise({redirectTo: '/main'});
 }]);
 
-var HELP_TEXT = { // TODO
-  religion: 'Mauris in dui vestibulum, tristique enim ultricies, blandit quam. Ut non dolor arcu. Aliquam gravida vitae elit dignissim.',
-  family: 'Donec dolor quam, vulputate volutpat nisi id, eleifend faucibus lorem. Nulla facilisi. Integer viverra, nisl rutrum tincidunt.',
-  self: 'Mauris in dui vestibulum, tristique enim ultricies, blandit quam. Ut non dolor arcu. Aliquam gravida vitae elit dignissim.',
-  community: 'Ut tincidunt consequat magna at hendrerit. Sed vitae mi ac urna volutpat hendrerit. Vivamus porta dapibus enim. Morbi.',
-  career: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+var HELP_TEXT = {
+  religion: 'With which interpretation of Islam do you identify? For example, Hanafi Sunni or Shia.\nWhen, where, and how was Islam revealed to you? Were you born Muslim, or did you revert to Islam later? Include events that were instrumental in establishing or strengthening your faith.\nHow do you practice Islam?',
+  family: 'From where is your family? How many siblings do yo have? What do your parents do?\nHow much time do you spend with your family?\nHow involved in your selection of a spouse will your family be?',
+  self: 'Describe a typical day in your life from waking up to going to sleep.\nWhere were you born? Where did you grow up? Where else have you lived?',
+  community: 'How are you involved with your community? Include social and philanthropic activities.\nAre you comfortable leaving your community?',
+  career: 'What did you study?\nHow do you earn a living?\nWhat are your future career aspirations? For example, do you want to further your education? Do you want to climb the corporate ladder? Do you want to start your own business?'
 };
 
 var GENDERS = {female: 'Female', male: 'Male'};
