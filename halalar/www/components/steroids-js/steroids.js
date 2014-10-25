@@ -1,4 +1,4 @@
-/*! steroids-js - v3.5.3 - 2014-09-22 16:07 */
+/*! steroids-js - v3.5.5 - 2014-10-09 17:51 */
 (function(window){
 var Bridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -1074,6 +1074,25 @@ App = (function() {
     });
   }
 
+  App.prototype.loadTheme = function(options, callbacks) {
+    var theme;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    theme = options.constructor.name === "String" ? options : options.theme;
+    return steroids.nativeBridge.nativeCall({
+      method: "loadStyleTheme",
+      parameters: {
+        theme: theme
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
   App.prototype.getPath = function(options, callbacks) {
     if (options == null) {
       options = {};
@@ -1327,23 +1346,23 @@ DrawerCollection = (function(_super) {
     };
     validViews = true;
     if (options.left != null) {
-      if (options.left.id != null) {
-        DrawerCollection.applyViewOptions(options.left, parameters.left);
-      } else {
+      if ((options.left.id == null) && options.left.location) {
         validViews = false;
         if (callbacks.onFailure != null) {
           callbacks.onFailure("No identifier provided for the preloaded webview!");
         }
+      } else {
+        DrawerCollection.applyViewOptions(options.left, parameters.left);
       }
     }
     if (options.right != null) {
-      if (options.right.id != null) {
-        DrawerCollection.applyViewOptions(options.right, parameters.right);
-      } else {
+      if ((options.right.id == null) && options.right.location) {
         validViews = false;
         if (callbacks.onFailure != null) {
           callbacks.onFailure("No identifier provided for the preloaded webview!");
         }
+      } else {
+        DrawerCollection.applyViewOptions(options.right, parameters.right);
       }
     }
     if (options.options != null) {
@@ -1434,7 +1453,8 @@ DrawerCollection = (function(_super) {
     }
     if (view.id != null) {
       parameters.id = view.id;
-    } else {
+    }
+    if (view.location != null) {
       parameters.url = view.location;
     }
     if (view.keepLoading === true) {
@@ -1465,7 +1485,7 @@ DrawerCollection = (function(_super) {
       parameters.closeGestures = options.closeGestures;
     }
     if (options.stretchDrawer != null) {
-      parameters.strechDrawer = options.stretchDrawer;
+      parameters.stretchDrawer = options.stretchDrawer;
     }
     if (options.centerViewInteractionMode != null) {
       parameters.centerViewInteractionMode = options.centerViewInteractionMode;
@@ -1746,6 +1766,9 @@ NavigationBarButton = (function() {
     this.onTap = options.onTap;
     this.imagePath = options.imagePath;
     this.imageAsOriginal = options.imageAsOriginal;
+    this.styleClass = options.styleClass;
+    this.styleId = options.styleId;
+    this.styleCSS = options.styleCSS;
   }
 
   NavigationBarButton.prototype.toParams = function() {
@@ -1758,6 +1781,9 @@ NavigationBarButton = (function() {
       params.imagePath = relativeTo + this.imagePath;
     }
     params.imageAsOriginal = this.imageAsOriginal;
+    params.styleClass = this.styleClass;
+    params.styleId = this.styleId;
+    params.styleCSS = this.styleCSS;
     return params;
   };
 
@@ -1777,6 +1803,97 @@ NavigationBar = (function() {
   function NavigationBar() {
     this.buttonTapped = __bind(this.buttonTapped, this);
   }
+
+  NavigationBar.prototype.setStyleId = function(options, callbacks) {
+    var styleId;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    styleId = options.constructor.name === "String" ? options : options.styleId;
+    return steroids.nativeBridge.nativeCall({
+      method: "setNavigationBarStyleId",
+      parameters: {
+        styleId: styleId
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  NavigationBar.prototype.setStyleCSS = function(options, callbacks) {
+    var styleCSS;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    styleCSS = options.constructor.name === "String" ? options : options.styleCSS;
+    return steroids.nativeBridge.nativeCall({
+      method: "setNavigationBarStyleCSS",
+      parameters: {
+        styleCSS: styleCSS
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  NavigationBar.prototype.addStyleClass = function(options, callbacks) {
+    var styleClass;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    styleClass = options.constructor.name === "String" ? options : options.styleClass;
+    return steroids.nativeBridge.nativeCall({
+      method: "addNavigationBarStyleClass",
+      parameters: {
+        styleClass: styleClass
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  NavigationBar.prototype.setStyleClass = function(options, callbacks) {
+    var styleClass;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    styleClass = options.constructor.name === "String" ? options : options.styleClass;
+    return steroids.nativeBridge.nativeCall({
+      method: "setNavigationBarStyleClass",
+      parameters: {
+        styleClass: styleClass
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  NavigationBar.prototype.tapButton = function(options, callbacks) {
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    return steroids.nativeBridge.nativeCall({
+      method: "navigationBarTapButton",
+      parameters: options,
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
 
   NavigationBar.prototype.hide = function(options, callbacks) {
     if (options == null) {
@@ -1852,15 +1969,12 @@ NavigationBar = (function() {
         overrideBackButton: options.overrideBackButton
       };
       buttonParametersFrom = function(obj) {
-        if (obj.title != null) {
-          return {
-            title: obj.title
-          };
-        } else {
-          return {
-            imagePath: relativeTo + obj.imagePath
-          };
+        var btnParams;
+        btnParams = obj.toParams();
+        if (obj.imagePath != null) {
+          btnParams.imagePath = relativeTo + obj.imagePath;
         }
+        return btnParams;
       };
       if (typeof AndroidAPIBridge === 'undefined') {
         locations = ["right", "left"];
@@ -2150,6 +2264,82 @@ TabBar = (function(_super) {
     TabBar.__super__.constructor.call(this, "tab", ["willchange", "didchange"]);
   }
 
+  TabBar.prototype.setStyleId = function(options, callbacks) {
+    var styleId;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    styleId = options.constructor.name === "String" ? options : options.styleId;
+    return steroids.nativeBridge.nativeCall({
+      method: "setTabBarStyleId",
+      parameters: {
+        styleId: styleId
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  TabBar.prototype.setStyleCSS = function(options, callbacks) {
+    var styleCSS;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    styleCSS = options.constructor.name === "String" ? options : options.styleCSS;
+    return steroids.nativeBridge.nativeCall({
+      method: "setTabBarStyleCSS",
+      parameters: {
+        styleCSS: styleCSS
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  TabBar.prototype.addStyleClass = function(options, callbacks) {
+    var styleClass;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    styleClass = options.constructor.name === "String" ? options : options.styleClass;
+    return steroids.nativeBridge.nativeCall({
+      method: "addTabBarStyleClass",
+      parameters: {
+        styleClass: styleClass
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  TabBar.prototype.setStyleClass = function(options, callbacks) {
+    var styleClass;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    styleClass = options.constructor.name === "String" ? options : options.styleClass;
+    return steroids.nativeBridge.nativeCall({
+      method: "setTabBarStyleClass",
+      parameters: {
+        styleClass: styleClass
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
   TabBar.prototype.hide = function(options, callbacks) {
     if (options == null) {
       options = {};
@@ -2236,7 +2426,10 @@ TabBar = (function(_super) {
           parameters.tabs.push({
             title: options.tabs[scale].title,
             image_path: options.tabs[scale].icon,
-            badge: options.tabs[scale].badge
+            badge: options.tabs[scale].badge,
+            styleClass: options.tabs[scale].styleClass,
+            styleId: options.tabs[scale].styleId,
+            styleCSS: options.tabs[scale].styleCSS
           });
         }
       }
@@ -2266,7 +2459,10 @@ TabBar = (function(_super) {
           target_url: options.tabs[scale].location,
           title: options.tabs[scale].title,
           image_path: options.tabs[scale].icon,
-          position: options.tabs[scale].position
+          position: options.tabs[scale].position,
+          styleClass: options.tabs[scale].styleClass,
+          styleId: options.tabs[scale].styleId,
+          styleCSS: options.tabs[scale].styleCSS
         });
       }
       return steroids.nativeBridge.nativeCall({
@@ -3198,10 +3394,16 @@ Analytics = (function() {
   return Analytics;
 
 })();
-;var Screen;
+;var Screen,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-Screen = (function() {
-  function Screen() {}
+Screen = (function(_super) {
+  __extends(Screen, _super);
+
+  function Screen() {
+    Screen.__super__.constructor.call(this, "screen", ["alertdidshow"]);
+  }
 
   Screen.prototype.edges = {
     LEFT: "left",
@@ -3270,6 +3472,21 @@ Screen = (function() {
     });
   };
 
+  Screen.prototype.dismissAlert = function(options, callbacks) {
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    return steroids.nativeBridge.nativeCall({
+      method: "dismissAlert",
+      parameters: options,
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
   Screen.mapDegreesToOrientations = function(degrees) {
     if (degrees === 0 || degrees === "0") {
       return "portrait";
@@ -3331,7 +3548,7 @@ Screen = (function() {
 
   return Screen;
 
-})();
+})(EventsSupport);
 ;var File;
 
 File = (function() {
@@ -3577,7 +3794,7 @@ PostMessage = (function() {
 ;var _this = this;
 
 window.steroids = {
-  version: "3.5.3",
+  version: "3.5.5",
   Animation: Animation,
   File: File,
   views: {
