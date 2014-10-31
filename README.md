@@ -41,5 +41,5 @@ steroids deploy
 ```
 
 * [Appgyver Cloud Services](https://build.appgyver.com/applications)
-* [iTunes Connect](https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wo/34.0)
+* [iTunes Connect](https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app)
 * [Google Play Developer Console](https://play.google.com/apps/publish)
