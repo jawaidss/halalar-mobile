@@ -1,4 +1,4 @@
-/*! steroids-js - v3.5.5 - 2014-10-09 17:51 */
+/*! steroids-js - v3.5.8 - 2014-11-19 14:54 */
 (function(window){
 var Bridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -578,6 +578,27 @@ Events = (function() {
     return document.dispatchEvent(visibilityChangeCustomEvent);
   };
 
+  Events.overrideVisibilityProperties = function() {
+    if (document.__defineGetter__) {
+      delete document.visibilityState;
+      delete document.hidden;
+      document.__visibilityState_internal = "";
+      document.__hidden_internal = false;
+      document.__defineGetter__("visibilityState", function() {
+        return document.__visibilityState_internal;
+      });
+      document.__defineSetter__("visibilityState", function(val) {
+        return document.__visibilityState_internal = val;
+      });
+      document.__defineGetter__("hidden", function() {
+        return document.__hidden_internal;
+      });
+      return document.__defineSetter__("hidden", function(val) {
+        return document.__hidden_internal = val;
+      });
+    }
+  };
+
   Events.initializeVisibilityState = function(options) {
     if (options == null) {
       options = {};
@@ -585,8 +606,9 @@ Events = (function() {
     steroids.debug({
       msg: "set document.visibilityState to unloaded"
     });
+    Events.overrideVisibilityProperties();
     document.visibilityState = "unloaded";
-    document.hidden = "true";
+    document.hidden = true;
     return document.addEventListener("DOMContentLoaded", function() {
       steroids.debug({
         msg: "got DOMContentLoaded, setting document.visibilityState to prerender"
@@ -615,8 +637,34 @@ Events = (function() {
     });
   };
 
+  Events.waitForWebViewUUID = function(callback) {
+    var checkWebViewUUID,
+      _this = this;
+    checkWebViewUUID = function() {
+      if (window.AG_WEBVIEW_UUID) {
+        return callback();
+      } else {
+        return setTimeout(checkWebViewUUID, 100);
+      }
+    };
+    return setTimeout(checkWebViewUUID, 100);
+  };
+
   Events.extend = function(options, callbacks) {
-    var becomeHiddenEvent, becomeVisibleEvent, focusAdded, lostFocusAdded,
+    var _this = this;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    return this.waitForWebViewUUID(function() {
+      return _this.setupEventHandlers(options, callbacks);
+    });
+  };
+
+  Events.setupEventHandlers = function(options, callbacks) {
+    var becomeHiddenEvent, becomeVisibleEvent, event, eventHandlerId, focusAdded, lostFocusAdded,
       _this = this;
     if (options == null) {
       options = {};
@@ -632,16 +680,21 @@ Events = (function() {
     this.initializeVisibilityState();
     this.checkInitialVisibility();
     focusAdded = function() {
+      var event, eventHandlerId;
       steroids.debug({
         msg: "focus added"
       });
+      event = "lostFocus";
+      eventHandlerId = "" + (event.toLowerCase()) + "_" + window.AG_WEBVIEW_UUID;
       return steroids.nativeBridge.nativeCall({
         method: "addEventListener",
         parameters: {
-          event: "lostFocus"
+          event: event,
+          eventHandlerId: eventHandlerId
         },
         successCallbacks: [lostFocusAdded, callbacks.onSuccess],
-        recurringCallbacks: [becomeHiddenEvent, callbacks.onFailure]
+        recurringCallbacks: [becomeHiddenEvent],
+        failureCallbacks: [callbacks.onFailure]
       });
     };
     lostFocusAdded = function() {
@@ -666,13 +719,17 @@ Events = (function() {
       document.hidden = true;
       return _this.dispatchVisibilitychangedEvent();
     };
+    event = "focus";
+    eventHandlerId = "" + event + "_" + window.AG_WEBVIEW_UUID;
     return steroids.nativeBridge.nativeCall({
       method: "addEventListener",
       parameters: {
-        event: "focus"
+        event: event,
+        eventHandlerId: eventHandlerId
       },
       successCallbacks: [focusAdded, callbacks.onSuccess],
-      recurringCallbacks: [becomeVisibleEvent, callbacks.onFailure]
+      failureCallbacks: [callbacks.onFailure],
+      recurringCallbacks: [becomeVisibleEvent]
     });
   };
 
@@ -3794,7 +3851,7 @@ PostMessage = (function() {
 ;var _this = this;
 
 window.steroids = {
-  version: "3.5.5",
+  version: "3.5.8",
   Animation: Animation,
   File: File,
   views: {
