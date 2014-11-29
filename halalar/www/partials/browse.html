@@ -6,6 +6,16 @@
 </div>
 
 <div hm-swipe="next(true)" ng-show="profile">
+  <div class="list" ng-show="profile.photo">
+    <div class="item item-divider">
+      <i class="icon ion-image"></i>
+      Photo
+    </div>
+    <div class="item">
+      <img ng-src="{{ profile.photo }}">
+    </div>
+  </div>
+
   <div class="list">
     <div class="item item-text-wrap">
       <strong>Age</strong> {{ profile.age }}<br>

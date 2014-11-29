@@ -33,7 +33,7 @@ describe('Controller: ProfileCtrl', function() {
         errorCallback('Error!'); // TODO
       }
     });
-    spyOn(profileService, 'editProfile').andCallFake(function(token, age, city, country,
+    spyOn(profileService, 'editProfile').andCallFake(function(token, photoURI, photoClear, age, city, country,
                                                               religion, family, self, community, career,
                                                               successCallback, errorCallback) {
       if (age) {
@@ -53,6 +53,9 @@ describe('Controller: ProfileCtrl', function() {
       alert: jasmine.createSpy('alert').andCallFake(function() {
         arguments[1]();
       })
+    };
+    navigator.camera = {
+      PictureSourceType: jasmine.createSpyObj('PictureSourceType', ['CAMERA', 'PHOTOLIBRARY'])
     };
 
     ProfileCtrl = $controller('ProfileCtrl', {
@@ -100,7 +103,7 @@ describe('Controller: ProfileCtrl', function() {
     scope.age = 18;
     scope.submit();
     expect(profileService.editProfile).toHaveBeenCalledWith(
-      'token', scope.age, scope.city, scope.country,
+      'token', scope.photoURI, scope.photoClear, scope.age, scope.city, scope.country,
       scope.religion, scope.family, scope.self, scope.community, scope.career,
       jasmine.any(Function), jasmine.any(Function)
     );

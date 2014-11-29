@@ -63,6 +63,8 @@ describe('Service: profileService', function() {
 
   it('should edit the current profile', function() {
     var token = 'token';
+    var photoURI = null;
+    var photoClear = false;
     var age = 'age';
     var city = 'city';
     var country = 'country';
@@ -74,7 +76,7 @@ describe('Service: profileService', function() {
     var successCallback = jasmine.createSpy('successCallback');
     var errorCallback = jasmine.createSpy('errorCallback');
     profileService.editProfile(
-      token, age, city, country,
+      token, photoURI, photoClear, age, city, country,
       religion, family, self, community, career,
       successCallback, errorCallback
     );
@@ -83,7 +85,7 @@ describe('Service: profileService', function() {
 
     token = null;
     profileService.editProfile(
-      token, age, city, country,
+      token, photoURI, photoClear, age, city, country,
       religion, family, self, community, career,
       successCallback, errorCallback
     );

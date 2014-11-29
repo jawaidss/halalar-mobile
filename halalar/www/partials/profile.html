@@ -6,6 +6,31 @@
 </div>
 
 <div ng-hide="modal || !profile">
+  <div class="list" id="photo">
+    <div class="item item-divider">
+      Photo (optional)
+    </div>
+
+    <a class="item item-icon-left" ng-click="setPhoto(PictureSourceType.CAMERA)">
+      <i class="icon ion-camera"></i>
+      <h2>Camera</h2>
+    </a>
+
+    <a class="item item-icon-left" ng-click="setPhoto(PictureSourceType.PHOTOLIBRARY)">
+      <i class="icon ion-images"></i>
+      <h2>Library</h2>
+    </a>
+
+    <div class="item" ng-show="photo">
+      <img ng-src="{{ photo }}">
+    </div>
+
+    <a class="item item-icon-left" ng-click="removePhoto()" ng-show="photo">
+      <i class="icon ion-trash-a"></i>
+      <h2>Remove</h2>
+    </a>
+  </div>
+
   <div class="list">
     <label class="item item-input">
       <span class="input-label">Age</span>

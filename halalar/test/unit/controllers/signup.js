@@ -24,7 +24,7 @@ describe('Controller: SignupCtrl', function() {
     scrollToService = _scrollToService_;
 
     spyOn(history, 'back').andCallThrough();
-    spyOn(userService, 'signUp').andCallFake(function(age, gender, city, country,
+    spyOn(userService, 'signUp').andCallFake(function(photoURI, age, gender, city, country,
                                                       religion, family, self, community, career,
                                                       username, email, password,
                                                       successCallback, errorCallback) {
@@ -45,6 +45,9 @@ describe('Controller: SignupCtrl', function() {
       alert: jasmine.createSpy('alert').andCallFake(function() {
         arguments[1]();
       })
+    };
+    navigator.camera = {
+      PictureSourceType: jasmine.createSpyObj('PictureSourceType', ['CAMERA', 'PHOTOLIBRARY'])
     };
 
     SignupCtrl = $controller('SignupCtrl', {
@@ -87,6 +90,7 @@ describe('Controller: SignupCtrl', function() {
   });
 
   it('should sign up', function() {
+    scope.photoURI = null;
     scope.age = 'age';
     scope.gender = 'gender';
     scope.city = 'city';
@@ -101,7 +105,7 @@ describe('Controller: SignupCtrl', function() {
     scope.password = 'password';
     scope.submit();
     expect(userService.signUp).toHaveBeenCalledWith(
-      scope.age, scope.gender, scope.city, scope.country,
+      scope.photoURI, scope.age, scope.gender, scope.city, scope.country,
       scope.religion, scope.family, scope.self, scope.community, scope.career,
       scope.username, scope.email, scope.password,
       jasmine.any(Function), jasmine.any(Function)

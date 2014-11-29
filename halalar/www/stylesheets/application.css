@@ -4,6 +4,10 @@ body {
 	background-color:#fff;
 }
 
+img {
+  max-width: 100%;
+}
+
 textarea { /* TODO */
   height: 15em;
 }

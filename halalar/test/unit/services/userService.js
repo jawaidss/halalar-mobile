@@ -51,6 +51,7 @@ describe('Service: userService', function() {
   });
 
   it('should sign up', function() {
+    var photoURI = null;
     var age = 'age';
     var gender = 'gender';
     var city = 'city';
@@ -66,7 +67,7 @@ describe('Service: userService', function() {
     var successCallback = jasmine.createSpy('successCallback');
     var errorCallback = jasmine.createSpy('errorCallback');
     userService.signUp(
-      age, gender, city, country,
+      photoURI, age, gender, city, country,
       religion, family, self, community, career,
       username, email, password,
       successCallback, errorCallback
@@ -77,7 +78,7 @@ describe('Service: userService', function() {
 
     username = null;
     userService.signUp(
-      age, gender, city, country,
+      photoURI, age, gender, city, country,
       religion, family, self, community, career,
       username, email, password,
       successCallback, errorCallback

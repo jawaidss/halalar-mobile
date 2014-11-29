@@ -13,6 +13,7 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$time
     user.token,
     function(data) {
       $scope.profile = data.profile;
+      $scope.photo = data.profile.photo;
       $scope.age = data.profile.age;
       $scope.gender = data.profile.gender;
       $scope.city = data.profile.city;
@@ -72,10 +73,66 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$time
     });
   };
 
+  $scope.PictureSourceType = navigator.camera.PictureSourceType;
+
+  $scope.setPhoto = function(sourceType) {
+    navigator.camera.getPicture(
+      function(imageURI) {
+        window.resolveLocalFileSystemURI(
+          imageURI,
+          function(sourceFile) {
+            window.resolveLocalFileSystemURI(
+              'file://' + steroids.app.absoluteUserFilesPath,
+              function(directory) {
+                sourceFile.moveTo(
+                  directory,
+                  sourceFile.name,
+                  function(destinationFile) {
+                    $scope.$apply(function() {
+                      $scope.photo = '/' + destinationFile.name + '?' + ((new Date()).getTime());
+                      $scope.photoURI = destinationFile.toURI();
+                      $scope.photoClear = false;
+                    });
+                  },
+                  function(message) {}
+                );
+              },
+              function(message) {}
+            );
+          },
+          function(message) {}
+        );
+      },
+      function(message) {},
+      {
+        quality: 50,
+        destinationType: navigator.camera.DestinationType.FILE_URI,
+        sourceType: sourceType,
+        allowEdit: true,
+        encodingType: navigator.camera.EncodingType.JPEG,
+        targetWidth: 500,
+        targetHeight: 500,
+        mediaType: navigator.camera.MediaType.PICTURE,
+        correctOrientation: true,
+        saveToPhotoAlbum: false,
+        cameraDirection: navigator.camera.Direction.FRONT
+      }
+    );
+  };
+
+  $scope.removePhoto = function() {
+    $scope.photo = null;
+    $scope.photoURI = null;
+    $scope.photoClear = true;
+    $timeout(function() {
+      scrollToService.scrollToElement('photo');
+    });
+  };
+
   $scope.submit = function() {
     $scope.loading = true;
     profileService.editProfile(
-      user.token, $scope.age, $scope.city, $scope.country,
+      user.token, $scope.photoURI, $scope.photoClear, $scope.age, $scope.city, $scope.country,
       $scope.religion, $scope.family, $scope.self, $scope.community, $scope.career,
       function(data) {
         navigator.notification.alert('Saved!', function() {
@@ -84,7 +141,14 @@ angular.module('halalarControllers').controller('ProfileCtrl', ['$scope', '$time
       },
       function(message) {
         navigator.notification.alert(message, function() {});
-        $scope.loading = false;
+
+        if ($scope.photoURI) {
+          $scope.$apply(function() {
+            $scope.loading = false;
+          });
+        } else {
+          $scope.loading = false;
+        }
       }
     );
   };

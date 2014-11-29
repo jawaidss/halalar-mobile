@@ -24,10 +24,10 @@ angular.module('halalarServices').service('profileService', ['localStorageServic
     );
   };
 
-  this.editProfile = function(token, age, city, country,
+  this.editProfile = function(token, photoURI, photoClear, age, city, country,
                               religion, family, self, community, career,
                               successCallback, errorCallback) {
-    apiService.post(
+    apiService.postFile(
       'edit-profile',
       {
         token: token,
@@ -40,6 +40,9 @@ angular.module('halalarServices').service('profileService', ['localStorageServic
         community: community,
         career: career
       },
+      'photo',
+      photoURI,
+      photoClear,
       successCallback,
       errorCallback
     );

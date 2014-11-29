@@ -23,11 +23,11 @@ angular.module('halalarServices').service('userService', ['localStorageService',
     );
   };
 
-  this.signUp = function(age, gender, city, country,
+  this.signUp = function(photoURI, age, gender, city, country,
                          religion, family, self, community, career,
                          username, email, password,
                          successCallback, errorCallback) {
-    apiService.post(
+    apiService.postFile(
       'sign-up',
       {
         age: age,
@@ -43,6 +43,9 @@ angular.module('halalarServices').service('userService', ['localStorageService',
         email: email,
         password: password
       },
+      'photo',
+      photoURI,
+      false,
       function(data) {
         localStorageService.set('user', {
           username: username,
