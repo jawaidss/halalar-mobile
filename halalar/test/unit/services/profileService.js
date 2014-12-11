@@ -29,6 +29,7 @@ describe('Service: profileService', function() {
 
     spyOn(apiService, 'get').andCallFake(fake);
     spyOn(apiService, 'post').andCallFake(fake);
+    spyOn(apiService, 'postFile').andCallThrough();
   }));
 
   it('should get the cache', function() {
@@ -80,6 +81,7 @@ describe('Service: profileService', function() {
       religion, family, self, community, career,
       successCallback, errorCallback
     );
+    expect(apiService.postFile).toHaveBeenCalled();
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
 
@@ -89,6 +91,7 @@ describe('Service: profileService', function() {
       religion, family, self, community, career,
       successCallback, errorCallback
     );
+    expect(apiService.postFile.calls.length).toEqual(2);
     expect(successCallback.calls.length).toEqual(1);
     expect(errorCallback).toHaveBeenCalled();
   });

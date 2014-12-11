@@ -25,6 +25,7 @@ describe('Service: userService', function() {
         errorCallback('Error!');
       }
     });
+    spyOn(apiService, 'postFile').andCallThrough();
   }));
 
   it('should get the current user', function() {
@@ -72,6 +73,7 @@ describe('Service: userService', function() {
       username, email, password,
       successCallback, errorCallback
     );
+    expect(apiService.postFile).toHaveBeenCalled();
     expect(localStorageService.set).toHaveBeenCalledWith('user', {username: username, token: 'token'});
     expect(successCallback).toHaveBeenCalled();
     expect(errorCallback).not.toHaveBeenCalled();
@@ -83,6 +85,7 @@ describe('Service: userService', function() {
       username, email, password,
       successCallback, errorCallback
     );
+    expect(apiService.postFile.calls.length).toEqual(2);
     expect(localStorageService.set.calls.length).toEqual(1);
     expect(successCallback.calls.length).toEqual(1);
     expect(errorCallback).toHaveBeenCalled();

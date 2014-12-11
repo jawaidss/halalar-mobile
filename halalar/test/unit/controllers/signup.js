@@ -47,8 +47,28 @@ describe('Controller: SignupCtrl', function() {
       })
     };
     navigator.camera = {
-      PictureSourceType: jasmine.createSpyObj('PictureSourceType', ['CAMERA', 'PHOTOLIBRARY'])
+      PictureSourceType: jasmine.createSpyObj('PictureSourceType', ['CAMERA', 'PHOTOLIBRARY']),
+      DestinationType: jasmine.createSpyObj('DestinationType', ['FILE_URI']),
+      EncodingType: jasmine.createSpyObj('EncodingType', ['JPEG']),
+      MediaType: jasmine.createSpyObj('MediaType', ['PICTURE']),
+      Direction: jasmine.createSpyObj('Direction', ['FRONT']),
+      getPicture: jasmine.createSpy('getPicture').andCallFake(function(cameraSuccess, cameraError, cameraOptions) {
+        cameraSuccess('');
+      })
     };
+
+    window.resolveLocalFileSystemURI = jasmine.createSpy('resolveLocalFileSystemURI').andCallFake(function(url, successCallback, errorCallback) {
+      successCallback({
+        'moveTo': jasmine.createSpy('moveTo').andCallFake(function(parent, newName, successCallback, errorCallback) {
+          successCallback({
+            'name': jasmine.createSpy('name').andReturn(''),
+            'toURI': jasmine.createSpy('toURI').andReturn('')
+          });
+        }),
+        'name': jasmine.createSpy('name').andReturn(''),
+        'toURI': jasmine.createSpy('toURI').andReturn('')
+      });
+    });
 
     SignupCtrl = $controller('SignupCtrl', {
       $scope: scope,
@@ -132,5 +152,28 @@ describe('Controller: SignupCtrl', function() {
     expect(scope.religion).toEqual('Test');
     timeout.flush();
     expect(scrollToService.scrollToElement).toHaveBeenCalledWith(scope.field);
+  });
+
+  it('should set the photo', function() {
+    scope.photo = null;
+    scope.photoURI = null;
+
+    scope.setPhoto(navigator.camera.PictureSourceType.CAMERA);
+
+    expect(scope.photo).toEqual(jasmine.any(String));
+    expect(scope.photoURI).toEqual(jasmine.any(String));
+  });
+
+  it('should remove the photo', function() {
+    scope.photo = '';
+    scope.photoURI = '';
+
+    scope.removePhoto();
+
+    expect(scope.photo).toBeNull();
+    expect(scope.photoURI).toBeNull();
+
+    timeout.flush();
+    expect(scrollToService.scrollToElement).toHaveBeenCalledWith('photo');
   });
 });
