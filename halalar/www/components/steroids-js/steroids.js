@@ -1,4 +1,4 @@
-/*! steroids-js - v3.5.8 - 2014-11-19 14:54 */
+/*! steroids-js - v3.5.10 - 2015-01-21 12:30 */
 (function(window){
 var Bridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -516,7 +516,6 @@ JSCoreBridge = (function(_super) {
 
   function JSCoreBridge() {
     this.message_handler = __bind(this.message_handler, this);
-    this.executeInWebThread = __bind(this.executeInWebThread, this);
     return true;
   }
 
@@ -542,19 +541,12 @@ JSCoreBridge = (function(_super) {
     return message;
   };
 
-  JSCoreBridge.prototype.executeInWebThread = function(msg) {
+  JSCoreBridge.prototype.message_handler = function(msg) {
     if ((msg != null ? msg.callback : void 0) != null) {
       if (this.callbacks[msg.callback] != null) {
         return this.callbacks[msg.callback].call(msg.parameters, msg.parameters);
       }
     }
-  };
-
-  JSCoreBridge.prototype.message_handler = function(msg) {
-    var _this = this;
-    return setTimeout(function() {
-      return _this.executeInWebThread(msg);
-    }, 1);
   };
 
   return JSCoreBridge;
@@ -1254,6 +1246,14 @@ Modal = (function(_super) {
         parameters.keepTransitionHelper = options.keepLoading;
         parameters.disableAnimation = options.disableAnimation;
         parameters.waitTransitionEnd = options.waitTransitionEnd;
+        if (options.animation != null) {
+          parameters.pushAnimation = options.animation.transition;
+          parameters.pushAnimationDuration = options.animation.duration;
+          parameters.popAnimation = options.animation.reversedTransition;
+          parameters.popAnimationDuration = options.animation.reversedDuration;
+          parameters.pushAnimationCurve = options.animation.curve;
+          parameters.popAnimationCurve = options.animation.reversedCurve;
+        }
         if (allowedRotations != null) {
           parameters.allowedRotations = allowedRotations;
         }
@@ -3851,7 +3851,7 @@ PostMessage = (function() {
 ;var _this = this;
 
 window.steroids = {
-  version: "3.5.8",
+  version: "3.5.10",
   Animation: Animation,
   File: File,
   views: {
