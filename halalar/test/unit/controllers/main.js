@@ -11,25 +11,32 @@ describe('Controller: MainCtrl', function() {
     scope,
     location,
     userService,
-    profileService;
+    profileService,
+    pushNotificationsService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, $location, _userService_, _profileService_) {
+  beforeEach(inject(function($controller, $rootScope, $location, _userService_, _profileService_, _pushNotificationsService_) {
     scope = $rootScope.$new();
     location = $location;
     userService = _userService_;
     profileService = _profileService_;
+    pushNotificationsService = _pushNotificationsService_;
 
     spyOn(location, 'path').andCallThrough();
     spyOn(userService, 'getUser').andCallThrough();
     spyOn(userService, 'logOut').andCallThrough();
     spyOn(profileService, 'removeCache').andCallThrough();
+    spyOn(pushNotificationsService, 'register').andCallFake(function(token) {});
+    spyOn(pushNotificationsService, 'clearApplicationIconBadgeNumber').andCallFake(function() {});
+    spyOn(pushNotificationsService, 'onMessageInForeground').andCallFake(function() {});
+    spyOn(pushNotificationsService, 'onMessageInBackground').andCallFake(function() {});
     spyOn(steroids.view.navigationBar, 'show').andCallThrough();
 
     MainCtrl = $controller('MainCtrl', {
       $scope: scope,
       $location: location,
-      userService: userService
+      userService: userService,
+      pushNotificationsService: pushNotificationsService
     });
   }));
 
@@ -79,5 +86,21 @@ describe('Controller: MainCtrl', function() {
 
   it('should attach the version to the scope', function() {
     expect(scope.VERSION).toEqual(VERSION);
+  });
+
+  it('should not register push notifications', function() {
+    expect(pushNotificationsService.register).not.toHaveBeenCalled();
+  });
+
+  it('should clear push notifications application icon badge number', function() {
+    expect(pushNotificationsService.clearApplicationIconBadgeNumber).toHaveBeenCalled();
+  });
+
+  it('should handle foreground push notifications', function() {
+    expect(pushNotificationsService.onMessageInForeground).toHaveBeenCalled();
+  });
+
+  it('should handle background push notifications', function() {
+    expect(pushNotificationsService.onMessageInBackground).toHaveBeenCalled();
   });
 });

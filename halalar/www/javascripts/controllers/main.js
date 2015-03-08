@@ -2,7 +2,7 @@
 
 /*global VERSION:false */
 
-angular.module('halalarControllers').controller('MainCtrl', ['$scope', '$location', 'userService', 'profileService', function($scope, $location, userService, profileService) {
+angular.module('halalarControllers').controller('MainCtrl', ['$scope', '$location', 'userService', 'profileService', 'pushNotificationsService', function($scope, $location, userService, profileService, pushNotificationsService) {
   steroids.view.navigationBar.show('Halalar');
 
   profileService.removeCache();
@@ -17,7 +17,7 @@ angular.module('halalarControllers').controller('MainCtrl', ['$scope', '$locatio
     navigator.notification.confirm('Log out?', function(buttonIndex) {
       if (buttonIndex === 1) {
         userService.logOut();
-        $scope.$apply(function () {
+        $scope.$apply(function() {
           $scope.user = null;
         });
       }
@@ -25,4 +25,12 @@ angular.module('halalarControllers').controller('MainCtrl', ['$scope', '$locatio
   };
 
   $scope.VERSION = VERSION;
+
+  if ($scope.user) {
+    pushNotificationsService.register($scope.user.token);
+  }
+
+  pushNotificationsService.clearApplicationIconBadgeNumber();
+  pushNotificationsService.onMessageInForeground();
+  pushNotificationsService.onMessageInBackground();
 }]);
